@@ -1,14 +1,4 @@
 export default class Bullet{
-    colors = [
-        "red",
-        "orange",
-        "yellow",
-        "green",
-        "blue",
-        "white",
-        "brown"
-    ];
-
     constructor(xPos, yPos, vel, damage){
         this.xPos = xPos;
         this.yPos = yPos;
@@ -17,8 +7,7 @@ export default class Bullet{
 
         this.width = 5;
         this.height = 15;
-        // this.color = "red"
-        this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        this.color = "black"
     }
 
 

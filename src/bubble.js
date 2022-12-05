@@ -9,14 +9,29 @@ export default class Bubble {
         "brown"
     ];
 
-    constructor(xPos, yPos){
+    constructor(xPos, yPos, xVel, yVel, size){
         this.xPos = xPos;
         this.yPos = yPos;
-        this.radius = 10;
-        this.color = "green"
-        this.xVel = 1;
-        this.yVel = 2;
-        // this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        this.xVel = xVel;
+        this.yVel = yVel;
+        this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        this.size = size;
+        this.radius = this.sizeDetermination();
+
+    }
+
+    sizeDetermination(){
+        if (this.size === 4){
+            return 30;
+        } else if(this.size === 3) {
+            return 20;
+        }
+        else if(this.size === 2) {
+            return 10;
+        }
+        else if(this.size === 1){
+            return 5;
+        }
     }
 
 

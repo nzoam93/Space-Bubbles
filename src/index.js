@@ -12,6 +12,10 @@ canvas.height = 450;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/bubblesBackground.png'
 
+//trying to draw the image as the default. It's not working though
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.drawImage(canvasBackground,0,0);
+
 const gameSpeed = 60;
 
 //for responsive canvas:
@@ -35,8 +39,8 @@ const player = new Player(canvas.width / 2 - 15, canvas.height - 50, bulletContr
 
 //defining bubbles
 const bubbles = [
-    new Bubble(0, canvas.height - 100),
-    new Bubble(50, canvas.height - 100)
+    new Bubble(0, canvas.height - 100, 1, 2, 4),
+    new Bubble(50, canvas.height - 100, 1, 2, 3)
 ]
 
 //baseball!!!!!
@@ -44,12 +48,8 @@ const baseball = new Baseball(50, 50);
 
 //What should continuously happen throughout the game
 function gameLoop(){
-    setCommonStyle();
-
-
-
+    // setCommonStyle();
     //clear the screen and draws the background
-    // ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(canvasBackground,0,0);
 
@@ -65,6 +65,11 @@ function gameLoop(){
         if(bulletController.collideWith(bubble)){
             const bubbleIndex = bubbles.indexOf(bubble);
             bubbles.splice(bubbleIndex, 1);
+            let newBubbleSize = bubble.size - 1;
+            if(newBubbleSize > 0){
+                bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize));
+                bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
+            }
         }
         else {
             bubble.draw(ctx);
@@ -74,15 +79,30 @@ function gameLoop(){
     bubbles.forEach((bubble) => { //bubble collision with player
         player.immunity--;
         if(player.collideWith(bubble) && player.immunity <= 0){
-            console.log("collided")
+            console.log(player.lives)
             player.immunity = gameSpeed; //gives you one second of immunity!
+            player.lives--;
+            let ow = new Audio("./sounds/ow.m4a");
+            ow.play();
         }
     })
 }
 
-//actually doing the game loop, every 1000/gameSpeed ms.
-const timedLoop = setInterval(gameLoop, 1000/gameSpeed);
-let timedLoop2;
+//variables for loops
+let timedLoop;
+let backgroundMusic;
+
+//actually doing the game loop, every 1000/gameSpeed ms
+const playButton = document.getElementById("playButton");
+playButton.addEventListener("click", ()=>{
+    //starting on level 1 when you first click the play button
+    timedLoop = setInterval(gameLoop, 1000/gameSpeed);
+    playButton.style.display = "none";
+    backgroundMusic = new Audio(); //doing this so it won't always be playing
+    // backgroundMusic = new Audio("./sounds/Superhero_violin.ogg");
+    backgroundMusic.play();
+})
+
 
 //stopping the loop with the pause button
 let paused = false;
@@ -90,14 +110,15 @@ const pauseButton = document.getElementById("pauseButton");
 pauseButton.addEventListener("click", () => {
     if (!paused){
         clearInterval(timedLoop);
-        clearInterval(timedLoop2);
         paused = true;
         pauseButton.innerHTML = "resume";
+        backgroundMusic.pause();
     }
     else {
-        timedLoop2 = setInterval(gameLoop, 1000/gameSpeed);
+        timedLoop = setInterval(gameLoop, 1000/gameSpeed);
         paused = false;
         pauseButton.innerHTML = "pause";
+        backgroundMusic.play();
     }
 
 })
@@ -106,16 +127,15 @@ pauseButton.addEventListener("click", () => {
 const stopLoop = (e) => {
     if(e.code === "KeyQ"){
         clearInterval(timedLoop);
-        clearInterval(timedLoop2);
     } else if(e.code === "KeyW"){
-        timedLoop2 = setInterval(gameLoop, 1000/gameSpeed);
+        timedLoop = setInterval(gameLoop, 1000/gameSpeed);
     }
 }
 document.addEventListener("keydown", stopLoop);
 
 //setting styles
-function setCommonStyle() {
-    ctx.shadowColor = "yellow"
-    ctx.shadowBlur = 20;
-    ctx.lineWidth = 5;
-}
+    // function setCommonStyle() {
+    //     ctx.shadowColor = "yellow"
+    //     ctx.shadowBlur = 20;
+    //     ctx.lineWidth = 5;
+    // }

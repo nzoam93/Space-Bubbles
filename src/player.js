@@ -5,6 +5,7 @@ export default class Player{
         this.width = 50;
         this.height = 50;
         this.vel = 4;
+        this.lives = 5;
         this.immunity = 0;
 
         this.bulletController = bulletController;
@@ -29,40 +30,28 @@ export default class Player{
 
     }
 
-    shoot(){
-        if(this.shootPressed){
-            console.log("shoot");
-            const speed = 5;
-            const delay = 7; //for delay between bullets
-            const damage = 1;
-            const bulletX = this.xPos + this.width / 2;
-            const bulletY = this.yPos;
-            this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
-        }
-    }
-
     move(){
-        if(this.upPressed){ //if it's true as defined below to be true when keying down
-            this.yPos -= this.vel;
-        }
-        if(this.downPressed){ //if it's true as defined below to be true when keying down
-            this.yPos += this.vel;
-        }
         if(this.leftPressed){ //if it's true as defined below to be true when keying down
             this.xPos -= this.vel;
         }
         if(this.rightPressed){ //if it's true as defined below to be true when keying down
             this.xPos += this.vel;
         }
+        this.wrapAround();
+    }
+
+    wrapAround(){
+        let canvas = document.getElementById("game");
+        if(this.xPos < 0){
+            this.xPos = canvas.width;
+        }
+        else if(this.xPos > canvas.width){
+            this.xPos = 0;
+        }
+
     }
 
     keydown = (e) => {
-        if(e.code === "ArrowUp"){
-            this.upPressed = true;
-        }
-        if(e.code === "ArrowDown"){
-            this.downPressed = true;
-        }
         if(e.code === "ArrowLeft"){
             this.leftPressed = true;
         }
@@ -71,16 +60,12 @@ export default class Player{
         }
         if(e.code === "Space"){
             this.shootPressed = true;
+            let laserSound = new Audio("./sounds/laser4.wav");
+            laserSound.play();
         }
     }
 
     keyup = (e) => {
-        if(e.code === "ArrowUp"){
-            this.upPressed = false;
-        }
-        if(e.code === "ArrowDown"){
-            this.downPressed = false;
-        }
         if(e.code === "ArrowLeft"){
             this.leftPressed = false;
         }
@@ -107,6 +92,19 @@ export default class Player{
         }
         return false;
     }
+
+    shoot(){
+        if(this.shootPressed){
+            console.log("shoot");
+            const speed = 5;
+            const delay = 7; //for delay between bullets
+            const damage = 1;
+            const bulletX = this.xPos + this.width / 2;
+            const bulletY = this.yPos;
+            this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
+        }
+    }
+
 
 
 }
