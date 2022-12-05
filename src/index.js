@@ -3,6 +3,10 @@ import BulletController from "./bulletController.js";
 import Bubble from "./bubble.js";
 import Level1 from "./levels/level1.js";
 import Baseball from "./baseball.js";
+import Sound from "./sounds.js";
+
+//defining sounds
+const sound = new Sound();
 
 //defining canvas
 const canvas = document.getElementById("game");
@@ -69,6 +73,7 @@ function gameLoop(){
             if(newBubbleSize > 0){
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize));
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
+                console.log(`bubblesLength ${bubbles.length}`);
             }
         }
         else {
@@ -82,15 +87,14 @@ function gameLoop(){
             console.log(player.lives)
             player.immunity = gameSpeed; //gives you one second of immunity!
             player.lives--;
-            let ow = new Audio("./sounds/ow.m4a");
-            ow.play();
+            sound.playerHit();
+            gameOver();
         }
     })
 }
 
 //variables for loops
 let timedLoop;
-let backgroundMusic;
 
 //actually doing the game loop, every 1000/gameSpeed ms
 const playButton = document.getElementById("playButton");
@@ -98,9 +102,8 @@ playButton.addEventListener("click", ()=>{
     //starting on level 1 when you first click the play button
     timedLoop = setInterval(gameLoop, 1000/gameSpeed);
     playButton.style.display = "none";
-    backgroundMusic = new Audio(); //doing this so it won't always be playing
-    // backgroundMusic = new Audio("./sounds/Superhero_violin.ogg");
-    backgroundMusic.play();
+    sound.playThemeSong();
+
 })
 
 
@@ -112,13 +115,13 @@ pauseButton.addEventListener("click", () => {
         clearInterval(timedLoop);
         paused = true;
         pauseButton.innerHTML = "resume";
-        backgroundMusic.pause();
+        sound.pauseThemeSong();
     }
     else {
         timedLoop = setInterval(gameLoop, 1000/gameSpeed);
         paused = false;
         pauseButton.innerHTML = "pause";
-        backgroundMusic.play();
+        sound.playThemeSong();
     }
 
 })
@@ -132,6 +135,15 @@ const stopLoop = (e) => {
     }
 }
 document.addEventListener("keydown", stopLoop);
+
+
+//gameOver logic
+function gameOver(){
+    if(player.lives === 0){
+        let gameOver = true;
+        sound.gameOver();
+    }
+}
 
 //setting styles
     // function setCommonStyle() {

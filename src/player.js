@@ -1,3 +1,5 @@
+import Sound from "./sounds.js";
+
 export default class Player{
     constructor(xPos, yPos, bulletController){
         this.xPos = xPos;
@@ -60,8 +62,8 @@ export default class Player{
         }
         if(e.code === "Space"){
             this.shootPressed = true;
-            let laserSound = new Audio("./sounds/laser4.wav");
-            laserSound.play();
+            let sound = new Sound();
+            sound.projectile();
         }
     }
 

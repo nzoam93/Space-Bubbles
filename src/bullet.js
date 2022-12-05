@@ -6,7 +6,7 @@ export default class Bullet{
         this.damage = damage;
 
         this.width = 5;
-        this.height = 15;
+        this.height = 25;
         this.color = "black"
     }
 
