@@ -5,7 +5,7 @@ export default class Bubble {
         "yellow",
         "green",
         "blue",
-        "white",
+        "purple",
         "brown"
     ];
 

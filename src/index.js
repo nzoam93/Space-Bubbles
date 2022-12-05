@@ -4,6 +4,7 @@ import Bubble from "./bubble.js";
 import Level1 from "./levels/level1.js";
 import Baseball from "./baseball.js";
 import Sound from "./sounds.js";
+import Timer from "./timer.js";
 
 //defining sounds
 const sound = new Sound();
@@ -20,7 +21,9 @@ canvasBackground.src = './imgs/bubblesBackground.png'
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.drawImage(canvasBackground,0,0);
 
+//misc
 const gameSpeed = 60;
+document.getElementById("pauseButton").style.display = "none"
 
 //for responsive canvas:
 //https://javascript.plainenglish.io/how-to-resize-html5-canvas-to-fit-the-window-26935bf301c4
@@ -50,8 +53,16 @@ const bubbles = [
 //baseball!!!!!
 const baseball = new Baseball(50, 50);
 
+//timer
+const timer = new Timer();
+
+//score
+let score = 0;
+
 //What should continuously happen throughout the game
 function gameLoop(){
+    timer.countdown();
+
     // setCommonStyle();
     //clear the screen and draws the background
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -73,7 +84,9 @@ function gameLoop(){
             if(newBubbleSize > 0){
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize));
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
-                console.log(`bubblesLength ${bubbles.length}`);
+                // console.log(`bubblesLength ${bubbles.length}`);
+                score += 50;
+                document.getElementById("score").innerHTML = `Score: ${score}`;
             }
         }
         else {
@@ -87,6 +100,9 @@ function gameLoop(){
             console.log(player.lives)
             player.immunity = gameSpeed; //gives you one second of immunity!
             player.lives--;
+            if(player.lives >= 0){
+                document.getElementById("lives").innerHTML = `Lives: ${player.lives}`;
+            }
             sound.playerHit();
             gameOver();
         }
@@ -101,8 +117,10 @@ const playButton = document.getElementById("playButton");
 playButton.addEventListener("click", ()=>{
     //starting on level 1 when you first click the play button
     timedLoop = setInterval(gameLoop, 1000/gameSpeed);
+    document.getElementById("pauseButton").style.display = "block"
     playButton.style.display = "none";
     sound.playThemeSong();
+
 
 })
 

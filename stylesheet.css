@@ -9,12 +9,13 @@ body{
         0deg,
         purple 0%,
         yellow 100%
-    )
+    );
+    font-family: fantasy;
 }
 
 h1{
-    margin: 0px;
-    margin-bottom: 10px;
+    margin: 10px;
+    margin-bottom: 0px;
     font-size: 40px;
 }
 
@@ -28,4 +29,19 @@ h1{
     border-style: solid;
     border-color: rebeccapurple; */
     background-image: url("./imgs/brickImage.png");
+}
+
+.gameButton{
+    cursor: pointer;
+    /* border-style: inset; */
+    border-radius: 10%;
+    background-color: lavenderblush;
+}
+
+#timer {
+    background-color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
 }
