@@ -1,5 +1,5 @@
 import Player from "./player.js";
-import BulletController from "./bulletController.js";
+import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
 import Level1 from "./levels/level1.js";
 import Baseball from "./baseball.js";
@@ -35,11 +35,11 @@ const gameSpeed = 60;
 // })
 
 
-//defining bullet controller
-const bulletController = new BulletController(canvas);
+//defining spike controller
+const spikeController = new SpikeController();
 
 //defining the player
-const player = new Player(canvas.width / 2 - 15, canvas.height - 50, bulletController);
+const player = new Player(canvas.width / 2 - 15, canvas.height - 50, spikeController);
 
 //defining bubbles
 const bubbles = [
@@ -57,7 +57,7 @@ function gameLoop(){
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(canvasBackground,0,0);
 
-    bulletController.draw(ctx)
+    spikeController.draw(ctx)
     player.draw(ctx)
 
     //baseball!!!!!!!
@@ -65,8 +65,8 @@ function gameLoop(){
     baseball.update(ctx)
 
 
-    bubbles.forEach((bubble) => { //bubble collision with bullet
-        if(bulletController.collideWith(bubble)){
+    bubbles.forEach((bubble) => { //bubble collision with spike
+        if(spikeController.collideWith(bubble)){
             const bubbleIndex = bubbles.indexOf(bubble);
             bubbles.splice(bubbleIndex, 1);
             let newBubbleSize = bubble.size - 1;

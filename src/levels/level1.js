@@ -1,5 +1,5 @@
 import Bubble from "../bubble.js";
-import BulletController from "../bulletController.js";
+import BulletController from "../spikeController.js";
 
 // let bulletController = new BulletController(
 

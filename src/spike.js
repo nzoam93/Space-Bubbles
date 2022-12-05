@@ -1,4 +1,4 @@
-export default class Bullet{
+export default class Spike{
     constructor(xPos, yPos, vel, damage){
         this.xPos = xPos;
         this.yPos = yPos;
@@ -6,7 +6,9 @@ export default class Bullet{
         this.damage = damage;
 
         this.width = 5;
-        this.height = 25;
+
+        let canvas = document.getElementById("game");
+        this.height = canvas.height;
         this.color = "black"
     }
 
