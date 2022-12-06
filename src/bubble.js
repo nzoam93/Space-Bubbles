@@ -63,7 +63,7 @@ export default class Bubble {
 
     hitWall(ctx){
         let canvas = document.getElementById("game");
-        if(this.xPos < 0){
+        if(this.xPos - this.radius < 0){
             this.xVel = -this.xVel;
         }
         else if (this.xPos > canvas.width - this.radius){

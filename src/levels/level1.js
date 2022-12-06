@@ -27,7 +27,7 @@ export default class Level1{
 
     createBubble(){
         let canvas = document.getElementById("game");
-        this.bubbles.push(new Bubble(0,canvas.height - 50,1,2,4));
+        this.bubbles.push(new Bubble(50,canvas.height - 50,1,2,4));
         this.bubbles.push(new Bubble(100,canvas.height - 50,1,2,2));
 
         // for(let i = 0; i < this.numBubbles; i++){

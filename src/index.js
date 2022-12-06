@@ -15,36 +15,43 @@ canvas.height = 450;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/bubblesBackground.png'
 
-//trying to draw the image as the default. It's not working though
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.drawImage(canvasBackground,0,0);
+//image is asyncrhonous. It hasn't loaded yet. Thus, we need an onload
+canvasBackground.onload = ()=> {
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // ctx.drawImage(canvasBackground,0,0);
+    const pattern = ctx.createPattern(canvasBackground, "repeat");
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+}
 
 
 //for responsive canvas:
 //https://javascript.plainenglish.io/how-to-resize-html5-canvas-to-fit-the-window-26935bf301c4
 // canvas.width = window.innerWidth
 // canvas.height = window.innerHeight * 0.75
+// let bottomPart = document.getElementById("bottomPart");
 // window.addEventListener('resize', () => {
-    //   canvas.width = window.innerWidth
-    //   canvas.height = window.innerHeight * 0.75
-    //   bottomPart = document.getElementById("bottomPart");
-    //   bottomPart.style.width = window.innerWidth
-    //   //not needed // draw(canvas)
-    // })
+//       canvas.width = window.innerWidth
+//       canvas.height = window.innerHeight * 0.75
+//       bottomPart.style.width = window.innerWidth
+//       //not needed // draw(canvas)
+//     })
 
 //misc
 const gameSpeed = 60;
-document.getElementById("pauseButton").style.display = "none";
 let score = 0;
+document.getElementById("pauseButton").style.display = "none";
 
 //calling the classes
 const sound = new Sound(); //sound class
 const spikeController = new SpikeController(); //spikeController
 const player = new Player(canvas.width / 2 - 15, canvas.height - 50, spikeController); //player
-let bubbles = [ //bubbles
-    new Bubble(0, canvas.height - 100, 1, 2, 4),
-    new Bubble(50, canvas.height - 100, 1, 2, 3)
-]
+// let bubbles = [ //bubbles
+//     new Bubble(0, canvas.height - 100, 1, 2, 4),
+//     new Bubble(50, canvas.height - 100, 1, 2, 3)
+// ]
+let level1 = new Level1();
+let bubbles = level1.bubbles;
 const baseball = new Baseball(50, 50); //baseball. Get rid of eventually
 const timer = new Timer(); //timer
 
@@ -74,14 +81,14 @@ function gameLoop(){
 function bubbleAndSpikeCollision(){
     bubbles.forEach((bubble) => { //bubble collision with spike
         if(spikeController.collideWith(bubble)){
+            score += 50;
+            document.getElementById("score").innerHTML = `Score: ${score}`;
             const bubbleIndex = bubbles.indexOf(bubble);
             bubbles.splice(bubbleIndex, 1);
             let newBubbleSize = bubble.size - 1; //decrease the size of the bubble
             if(newBubbleSize > 0){
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize)); //add bubbles!
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
-                score += 50;
-                document.getElementById("score").innerHTML = `Score: ${score}`;
             }
             bubble.bonusCall(); //drop a random bonus
         }
@@ -127,7 +134,7 @@ playButton.addEventListener("click", ()=>{
     document.getElementById("pauseButton").style.display = "block"
     playButton.style.display = "none";
     sound.playThemeSong();
-    new Level1();
+    // new Level1();
 })
 
 
