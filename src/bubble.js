@@ -1,3 +1,5 @@
+import Bonus from "./bonus.js";
+
 export default class Bubble {
     colors = [
         "red",
@@ -9,13 +11,14 @@ export default class Bubble {
         "brown"
     ];
 
-    constructor(xPos, yPos, xVel, yVel, size){
+    constructor(xPos, yPos, xVel, yVel, size, bonus){
         this.xPos = xPos;
         this.yPos = yPos;
         this.xVel = xVel;
         this.yVel = yVel;
         this.color = this.colors[Math.floor(Math.random() * this.colors.length)];
         this.size = size;
+        this.bonus = bonus;
         this.radius = this.sizeDetermination();
 
     }
@@ -65,6 +68,14 @@ export default class Bubble {
         }
         else if (this.xPos > canvas.width - this.radius){
             this.xVel = -this.xVel;
+        }
+    }
+
+
+    bonusCall(){
+        if(this.size >2){
+            let bonus = new Bonus(this);
+            bonus.dropCoin();
         }
     }
 }

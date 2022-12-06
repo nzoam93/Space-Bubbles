@@ -9,7 +9,6 @@ export default class Player{
         this.vel = 4;
         this.lives = 5;
         this.immunity = 0;
-
         this.bulletController = bulletController;
 
         //event listeners for the keystrokes
@@ -24,7 +23,7 @@ export default class Player{
         //creating the look of the character
         ctx.strokeStyle = "yellow";
         ctx.strokeRect(this.xPos, this.yPos, this.height, this.width);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "red";
         ctx.fillRect(this.xPos, this.yPos, this.height, this.width);
 
         //do the shoot function
@@ -97,7 +96,6 @@ export default class Player{
 
     shoot(){
         if(this.shootPressed){
-            console.log("shoot");
             const speed = 5;
             const delay = 7; //for delay between bullets
             const damage = 1;
@@ -106,7 +104,6 @@ export default class Player{
             this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
         }
     }
-
 
 
 }

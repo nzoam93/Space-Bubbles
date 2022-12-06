@@ -13,13 +13,13 @@ export default class Sound{
     }
 
     gameOver(){
-        let gameOver = new Audio("../sounds/gameOver.ogg");
-        gameOver.play();
+        // let gameOver = new Audio("../sounds/gameOver.ogg");
+        // gameOver.play();
     }
 
     projectile(){
-        let laserSound = new Audio("../sounds/laser4.wav");
-        laserSound.play();
+        // let laserSound = new Audio("../sounds/laser4.wav");
+        // laserSound.play();
     }
 
     playerHit(){

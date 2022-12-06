@@ -12,7 +12,6 @@ export default class SpikeController{
     }
 
     draw(ctx) {
-        console.log(this.spikes.length);
         this.spikes.forEach((spike) => {
             //remove the spike if it is off screen
             if(this.isSpikeOffScreen(spike)){

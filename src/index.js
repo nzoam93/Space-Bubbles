@@ -1,3 +1,4 @@
+//imports
 import Player from "./player.js";
 import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
@@ -5,9 +6,6 @@ import Level1 from "./levels/level1.js";
 import Baseball from "./baseball.js";
 import Sound from "./sounds.js";
 import Timer from "./timer.js";
-
-//defining sounds
-const sound = new Sound();
 
 //defining canvas
 const canvas = document.getElementById("game");
@@ -21,53 +19,45 @@ canvasBackground.src = './imgs/bubblesBackground.png'
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.drawImage(canvasBackground,0,0);
 
-//misc
-const gameSpeed = 60;
-document.getElementById("pauseButton").style.display = "none"
 
 //for responsive canvas:
 //https://javascript.plainenglish.io/how-to-resize-html5-canvas-to-fit-the-window-26935bf301c4
 // canvas.width = window.innerWidth
 // canvas.height = window.innerHeight * 0.75
 // window.addEventListener('resize', () => {
-//   canvas.width = window.innerWidth
-//   canvas.height = window.innerHeight * 0.75
-//   bottomPart = document.getElementById("bottomPart");
-//   bottomPart.style.width = window.innerWidth
-//   //not needed // draw(canvas)
-// })
+    //   canvas.width = window.innerWidth
+    //   canvas.height = window.innerHeight * 0.75
+    //   bottomPart = document.getElementById("bottomPart");
+    //   bottomPart.style.width = window.innerWidth
+    //   //not needed // draw(canvas)
+    // })
 
+//misc
+const gameSpeed = 60;
+document.getElementById("pauseButton").style.display = "none";
+let score = 0;
 
-//defining spike controller
-const spikeController = new SpikeController();
-
-//defining the player
-const player = new Player(canvas.width / 2 - 15, canvas.height - 50, spikeController);
-
-//defining bubbles
-const bubbles = [
+//calling the classes
+const sound = new Sound(); //sound class
+const spikeController = new SpikeController(); //spikeController
+const player = new Player(canvas.width / 2 - 15, canvas.height - 50, spikeController); //player
+let bubbles = [ //bubbles
     new Bubble(0, canvas.height - 100, 1, 2, 4),
     new Bubble(50, canvas.height - 100, 1, 2, 3)
 ]
+const baseball = new Baseball(50, 50); //baseball. Get rid of eventually
+const timer = new Timer(); //timer
 
-//baseball!!!!!
-const baseball = new Baseball(50, 50);
-
-//timer
-const timer = new Timer();
-
-//score
-let score = 0;
 
 //What should continuously happen throughout the game
 function gameLoop(){
     timer.countdown();
 
-    // setCommonStyle();
     //clear the screen and draws the background
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(canvasBackground,0,0);
 
+    //draw the spikes and player
     spikeController.draw(ctx)
     player.draw(ctx)
 
@@ -75,29 +65,37 @@ function gameLoop(){
     baseball.draw(ctx);
     baseball.update(ctx)
 
+    //collision detection
+    bubbleAndSpikeCollision();
+    bubbleAndPlayerCollision();
+}
 
+//bubble and spike collision
+function bubbleAndSpikeCollision(){
     bubbles.forEach((bubble) => { //bubble collision with spike
         if(spikeController.collideWith(bubble)){
             const bubbleIndex = bubbles.indexOf(bubble);
             bubbles.splice(bubbleIndex, 1);
-            let newBubbleSize = bubble.size - 1;
+            let newBubbleSize = bubble.size - 1; //decrease the size of the bubble
             if(newBubbleSize > 0){
-                bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize));
+                bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize)); //add bubbles!
                 bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
-                // console.log(`bubblesLength ${bubbles.length}`);
                 score += 50;
                 document.getElementById("score").innerHTML = `Score: ${score}`;
             }
+            bubble.bonusCall(); //drop a random bonus
         }
         else {
             bubble.draw(ctx);
         }
     })
+}
 
-    bubbles.forEach((bubble) => { //bubble collision with player
+//bubble collision with player
+function bubbleAndPlayerCollision(){
+    bubbles.forEach((bubble) => {
         player.immunity--;
         if(player.collideWith(bubble) && player.immunity <= 0){
-            console.log(player.lives)
             player.immunity = gameSpeed; //gives you one second of immunity!
             player.lives--;
             if(player.lives >= 0){
@@ -107,6 +105,15 @@ function gameLoop(){
             gameOver();
         }
     })
+}
+
+
+//gameOver logic
+function gameOver(){
+    if(player.lives === 0){
+        let gameOver = true;
+        sound.gameOver();
+    }
 }
 
 //variables for loops
@@ -120,8 +127,7 @@ playButton.addEventListener("click", ()=>{
     document.getElementById("pauseButton").style.display = "block"
     playButton.style.display = "none";
     sound.playThemeSong();
-
-
+    new Level1();
 })
 
 
@@ -153,19 +159,3 @@ const stopLoop = (e) => {
     }
 }
 document.addEventListener("keydown", stopLoop);
-
-
-//gameOver logic
-function gameOver(){
-    if(player.lives === 0){
-        let gameOver = true;
-        sound.gameOver();
-    }
-}
-
-//setting styles
-    // function setCommonStyle() {
-    //     ctx.shadowColor = "yellow"
-    //     ctx.shadowBlur = 20;
-    //     ctx.lineWidth = 5;
-    // }
