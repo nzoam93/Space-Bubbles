@@ -11,12 +11,12 @@ export default class Level3{
 
     setInfo(){
         document.getElementById("level").innerHTML = "Level: 3";
-        this.player.xPos = 300;
+        this.player.xPos = 400;
     }
 
     createBubble(){
         let canvas = document.getElementById("game");
-        this.bubbles.push(new Bubble(400, canvas.height - 50,1,2,5));
+        this.bubbles.push(new Bubble(700, canvas.height - 50,1,2,5));
         this.bubbles.push(new Bubble(50, canvas.height - 50,1,2,2));
     }
 

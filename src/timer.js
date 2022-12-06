@@ -1,5 +1,5 @@
 export default class Timer{
-    constructor(startTime = 120){
+    constructor(startTime){
         this.startTime = startTime;
         this.countdownEl = document.getElementById("timer");
         this.delayTime = 60; //way of getting around the game loop being 60 times faster

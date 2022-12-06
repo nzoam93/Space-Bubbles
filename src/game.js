@@ -20,7 +20,8 @@ export default class Game{
         this.spikeController = new SpikeController(); //spikeController
         this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController); //player
         this.baseball = new Baseball(50,50) //baseball. Get rid of eventually
-        this.timer = new Timer(); //timer
+        this.gameLength = 120;
+        this.timer = new Timer(this.gameLength); //timer
         this.level;
         this.levelNumber = 1;
         this.bubbles;
@@ -151,6 +152,11 @@ export default class Game{
             this.sound.gameOver();
             new EndGame(this.score, this.ctx);
             clearInterval(this.timedLoop);
+            document.getElementById("pauseButton").style.display = "none";
+            document.getElementById("playButton").style.display = "block"
+            this.timer.startTime = this.gameLength;
+            this.timer.countdownEl.style.color = "black"
+            document.getElementById("playButton").innerHTML = "Restart"
         }
     }
 
