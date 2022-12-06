@@ -24,11 +24,12 @@ h1{
     align-items: center;
     justify-content: space-evenly;
     height: 10%;
-    width: 550px;
+    width: 1000px;
     /* border: 5px;
     border-style: solid;
     border-color: rebeccapurple; */
     background-image: url("./imgs/brickImage.png");
+    font-size: xx-large;
 }
 
 .gameButton{
@@ -36,18 +37,18 @@ h1{
     /* border-style: inset; */
     border-radius: 10%;
     background-color: lavenderblush;
+    font-size: x-large;
 }
 
 #timer {
-    background-color: white;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: large;
-    width: 30px;
+    /* font-size: large; */
+    width: 150px;
 }
 
 #lives{
-    width: 60px;
+    width: 150px;
     /* makes it not auto-update the width when it changes */
 }

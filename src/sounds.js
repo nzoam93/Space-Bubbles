@@ -1,32 +1,62 @@
-let backgroundMusic = new Audio("../sounds/Superhero_violin.ogg");
-//backgroundMusic defined outside so it can be referenced in two places
+
 
 export default class Sound{
-    constructor(){}
+    constructor(){
+        this.isMuted = true; //during testing, keeping it muted
+        this.backgroundMusic = new Audio("../sounds/Superhero_violin.ogg");
+        this.gameOverSound = new Audio("../sounds/gameOver.ogg");
+        this.laserSound = new Audio("../sounds/laser4.wav");
+        this.ow = new Audio("../sounds/ow.m4a");
+    }
 
     playThemeSong(){
-        // backgroundMusic.play();
+        if(!this.isMuted){
+            this.backgroundMusic.play();
+        }
     }
 
     pauseThemeSong(){
-        backgroundMusic.pause();
+        this.backgroundMusic.pause();
     }
 
     gameOver(){
-        // let gameOver = new Audio("../sounds/gameOver.ogg");
-        // gameOver.play();
+        if(!this.isMuted){
+            this.gameOverSound.play();
+        }
     }
 
-    projectile(){
-        // let laserSound = new Audio("../sounds/laser4.wav");
-        // laserSound.play();
+    // pauseGameOverMusic(){
+    //     this.gameOverSound.pause();
+    // }
+
+    projectile(){ //currently, this is controlled with a NEW SOUND separately in the player class. This isn't quite right
+        if(!this.isMuted){
+            this.laserSound.play();
+        }
     }
+
+    // pauseProjectile(){
+    //     this.laserSound.pause();
+    // }
 
     playerHit(){
-        //  let ow = new Audio("../sounds/ow.m4a");
-        //  ow.play();
+        if(!this.isMuted){
+            this.ow.play();
+        }
     }
 
+    // pausePlayerHit(){
+    //     this.ow.pause();
+    // }
 
-
+    muteAndUnmute(){
+        if(this.isMuted){
+            this.isMuted = false;
+            this.playThemeSong();
+        }
+        else{
+            this.isMuted = true;
+            this.pauseThemeSong();
+        }
+    }
 }

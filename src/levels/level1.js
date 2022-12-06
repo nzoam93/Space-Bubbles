@@ -10,7 +10,7 @@ import Bubble from "../bubble.js";
 // let spikeController = new spikeController(
 
 export default class Level1{
-    constructor(player){
+    constructor(player){//player used in other levels, so I just kept it consistent here
         this.numBubbles = 3;
         this.bubbles = [];
         this.setInfo();

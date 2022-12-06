@@ -1,11 +1,12 @@
 //imports
 import Game from "./game.js";
+import Sound from "./sounds.js";
 
 //defining canvas
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-canvas.width = 550;
-canvas.height = 450;
+canvas.width = 1000;
+canvas.height = 500;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/bubblesBackground.png'
 
@@ -38,8 +39,6 @@ const currentGame = new Game(canvas, ctx, canvasBackground);
 //calling newGame upon click
 const playButton = document.getElementById("playButton");
 playButton.addEventListener("click", ()=>{
-    console.log("CurrentGame")
-    console.log(currentGame);
     currentGame.startGame();
     document.getElementById("pauseButton").style.display = "block"
     playButton.style.display = "none";
@@ -50,6 +49,13 @@ const pauseButton = document.getElementById("pauseButton");
 pauseButton.addEventListener("click", () => {
     currentGame.pauseGame();
 })
+
+//calling muteGame upon click
+const muteButton = document.getElementById("muteButton");
+muteButton.addEventListener("click", () => {
+    currentGame.muteGame();
+})
+
 
 // //stopping the loop with the keyboard
 // const stopLoop = (e) => {

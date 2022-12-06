@@ -7,6 +7,9 @@ import Timer from "./timer.js";
 import Level1 from "./levels/level1.js";
 import Level2 from "./levels/level2.js";
 import Level3 from "./levels/level3.js";
+import Bonus from "./bonus.js";
+import InBetweenLevel from "./levels/inBetweenLevel.js";
+import EndGame from "./levels/endGame.js";
 
 export default class Game{
     constructor(canvas, ctx, canvasBackground){
@@ -21,6 +24,7 @@ export default class Game{
         this.level;
         this.levelNumber = 1;
         this.bubbles;
+        this.bonuses;
 
 
         this.score = 0;
@@ -32,8 +36,6 @@ export default class Game{
     }
 
     startGame(){
-        console.log("StartGame");
-        console.log(this);
          //starting on level 1 when you first click the play button
         this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
 
@@ -83,6 +85,9 @@ export default class Game{
 
         //completed level?
         if(this.level.levelComplete()){
+            new InBetweenLevel(this.ctx);
+
+
             if (this.levelNumber === 1){
                 this.level = new Level2(this.player);
             }
@@ -93,13 +98,11 @@ export default class Game{
             this.levelNumber++; //use to increment it automatically
             this.bubbles = this.level.bubbles; //actually makes the array so it can draw the bubbles!
         }
+        this.gameOver();
     }
 
     //bubble and spike collision
     bubbleAndSpikeCollision(){
-        // console.log("collisiosndetection")
-        // console.log(this);
-        // console.log(this.bubbles);
         this.bubbles.forEach((bubble) => { //bubble collision with spike
             if(this.spikeController.collideWith(bubble)){
                 this.score += 50;
@@ -111,7 +114,13 @@ export default class Game{
                     this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize)); //add bubbles!
                     this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
                 }
-                bubble.bonusCall(); //drop a random bonus
+
+                //bonus logic??
+                // bubble.bonusCall(this.ctx); //drop a random bonus
+                // this.bonuses += bubble.bonus;
+                // this.bonuses.forEach((bonus) => {
+                //     bonus.draw(this.ctx);
+                // })
             }
             else {
                 bubble.draw(this.ctx);
@@ -130,7 +139,6 @@ export default class Game{
                     document.getElementById("lives").innerHTML = `Lives: ${this.player.lives}`;
                 }
                 this.sound.playerHit();
-                this.gameOver();
             }
         })
     }
@@ -138,9 +146,15 @@ export default class Game{
 
     //gameOver logic
     gameOver(){
-        if(this.player.lives === 0){
+        if((this.player.lives === 0) || (this.timer.minutes <= 0 && this.timer.seconds <= 0)){
             this.isGameOver = true;
             this.sound.gameOver();
+            new EndGame(this.score, this.ctx);
+            clearInterval(this.timedLoop);
         }
+    }
+
+    muteGame(){
+        this.sound.muteAndUnmute();
     }
 }

@@ -10,7 +10,7 @@ export default class Level3{
     }
 
     setInfo(){
-        document.getElementById("level").innerHTML = "Level: 2";
+        document.getElementById("level").innerHTML = "Level: 3";
         this.player.xPos = 300;
     }
 

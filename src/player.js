@@ -7,7 +7,7 @@ export default class Player{
         this.width = 50;
         this.height = 50;
         this.vel = 4;
-        this.lives = 5;
+        this.lives = 3;
         this.immunity = 0;
         this.bulletController = bulletController;
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./stylesheet.css">
     <script src="./src/index.js" type="module" defer></script> <!--type="module" is a workaround for webpack-->
     <title>Bubble Trouble V2</title>
@@ -12,12 +13,13 @@
     <h1>Bubble Trouble?</h1>
     <canvas id="game"></canvas>
     <div id="bottomPart">
-        <div id="lives" class="bottomInfo">Lives: 5</div>
-        <div id="score" class="bottomInfo">Score: 0</div>
+        <div id="level" class="bottomInfo">Level</div>
+        <div id="lives" class="bottomInfo">Lives: 3</div>
         <button id="playButton" class="gameButton">Start Game!</button>
         <button id="pauseButton" class="gameButton">Pause</button>
-        <div id="level" class="bottomInfo">Level</div>
+        <div id="score" class="bottomInfo">Score: 0</div>
         <div id="timer">Timer</div>
+        <button id="muteButton"><i class="fa-sharp fa-solid fa-volume"></i></button>
     </div>
 </body>
 </html>
