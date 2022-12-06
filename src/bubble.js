@@ -4,7 +4,6 @@ export default class Bubble {
     colors = [
         "red",
         "orange",
-        "yellow",
         "green",
         "blue",
         "purple",
@@ -24,7 +23,10 @@ export default class Bubble {
     }
 
     sizeDetermination(){
-        if (this.size === 4){
+        if (this.size === 5){
+            return 40;
+        }
+        else if (this.size === 4){
             return 30;
         } else if(this.size === 3) {
             return 20;

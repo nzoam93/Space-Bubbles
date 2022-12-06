@@ -1,10 +1,12 @@
 import Player from "./player.js";
 import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
-import Level1 from "./levels/level1.js";
 import Baseball from "./baseball.js";
 import Sound from "./sounds.js";
 import Timer from "./timer.js";
+import Level1 from "./levels/level1.js";
+import Level2 from "./levels/level2.js";
+import Level3 from "./levels/level3.js";
 
 export default class Game{
     constructor(canvas, ctx, canvasBackground){
@@ -14,10 +16,12 @@ export default class Game{
         this.sound = new Sound(); //sound class
         this.spikeController = new SpikeController(); //spikeController
         this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController); //player
-        this.level1 = new Level1(); //setting it to level 1. Should change later
-        this.bubbles = this.level1.bubbles;
         this.baseball = new Baseball(50,50) //baseball. Get rid of eventually
         this.timer = new Timer(); //timer
+        this.level;
+        this.levelNumber = 1;
+        this.bubbles;
+
 
         this.score = 0;
         this.gameSpeed = 60;
@@ -34,7 +38,10 @@ export default class Game{
         this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
 
         this.sound.playThemeSong();
-        // new Level1();
+
+        //starts at level 1
+        this.level = new Level1(this.player); //setting it to level 1. Should change later
+        this.bubbles = this.level.bubbles;
     }
 
     pauseGame(){
@@ -56,7 +63,6 @@ export default class Game{
 
     //What should continuously happen throughout the game
     gameLoop(){
-        // console.log(this)
         this.timer.countdown();
 
         //clear the screen and draws the background
@@ -74,6 +80,19 @@ export default class Game{
         //collision detection
         this.bubbleAndSpikeCollision();
         this.bubbleAndPlayerCollision();
+
+        //completed level?
+        if(this.level.levelComplete()){
+            if (this.levelNumber === 1){
+                this.level = new Level2(this.player);
+            }
+            else if(this.levelNumber === 2){
+                this.level = new Level3(this.player)
+            }
+
+            this.levelNumber++; //use to increment it automatically
+            this.bubbles = this.level.bubbles; //actually makes the array so it can draw the bubbles!
+        }
     }
 
     //bubble and spike collision

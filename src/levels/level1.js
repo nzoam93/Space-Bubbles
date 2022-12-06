@@ -10,8 +10,8 @@ import Bubble from "../bubble.js";
 // let spikeController = new spikeController(
 
 export default class Level1{
-    constructor(){
-        this.numBubbles = 2;
+    constructor(player){
+        this.numBubbles = 3;
         this.bubbles = [];
         this.setInfo();
         this.createBubble();
@@ -22,12 +22,12 @@ export default class Level1{
         // let canvas = document.getElementById("canvas");
         // canvas.style.backgroundImage = "url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')";
 
-        document.getElementById("level").innerHTML = "Level: 1"
+        document.getElementById("level").innerHTML = "Level: 1";
     }
 
     createBubble(){
         let canvas = document.getElementById("game");
-        this.bubbles.push(new Bubble(50,canvas.height - 50,1,2,4));
+        // this.bubbles.push(new Bubble(50,canvas.height - 50,1,2,4));
         this.bubbles.push(new Bubble(100,canvas.height - 50,1,2,2));
 
         // for(let i = 0; i < this.numBubbles; i++){
@@ -39,6 +39,10 @@ export default class Level1{
         //     // let bubbleID = document.getElementById(`bubble${i+1}`)
         //     this.bubbles.push(new Bubble(bubble, 5, 5)); //storing bubbles
         // }
+    }
+
+    levelComplete(){
+        return this.bubbles.length === 0;
     }
 
 
