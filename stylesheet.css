@@ -44,4 +44,10 @@ h1{
     align-items: center;
     justify-content: center;
     font-size: large;
+    width: 30px;
+}
+
+#lives{
+    width: 60px;
+    /* makes it not auto-update the width when it changes */
 }

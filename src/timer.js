@@ -1,5 +1,3 @@
-
-
 export default class Timer{
     constructor(startTime = 100){
         this.startTime = startTime;

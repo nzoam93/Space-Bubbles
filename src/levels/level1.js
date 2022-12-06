@@ -22,7 +22,7 @@ export default class Level1{
         // let canvas = document.getElementById("canvas");
         // canvas.style.backgroundImage = "url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')";
 
-        document.getElementById("level").innerHTML = "Level 1"
+        document.getElementById("level").innerHTML = "Level: 1"
     }
 
     createBubble(){
