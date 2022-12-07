@@ -4,11 +4,15 @@ import Sound from "./sounds.js";
 
 //defining canvas
 const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 500;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/background.png'
+const ctx = canvas.getContext("2d");
+ctx.shadowColor = "black";
+ctx.shadowOffsetX = 3;
+ctx.shadowOffsetY = 3;
+ctx.shadowBlur = 10;
 
 //image is asyncrhonous. It hasn't loaded yet. Thus, we need an onload
 canvasBackground.onload = ()=> {

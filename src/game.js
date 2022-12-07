@@ -98,6 +98,7 @@ export default class Game{
         this.bubbleAndSpikeCollision();
         this.bubbleAndPlayerCollision();
         this.bonusAndPlayerCollision();
+        this.bubbleAndTopCollision();
 
         //see if the level is over
         this.isLevelComplete();
@@ -117,8 +118,8 @@ export default class Game{
                 this.bubbles.splice(bubbleIndex, 1);
                 let newBubbleSize = bubble.size - 1; //decrease the size of the bubble
                 if(newBubbleSize > 0){
-                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -1, newBubbleSize)); //add bubbles!
-                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -1, newBubbleSize));
+                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -2, newBubbleSize)); //add bubbles!
+                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -2, newBubbleSize));
                 }
 
                 //bonus logic. Push the bonus into bonuses array if the bubble is big
@@ -155,6 +156,18 @@ export default class Game{
                 document.getElementById("score").innerHTML = `Score: ${this.score}`;
                 const bonusIndex = this.bonuses.indexOf(bonus);
                 this.bonuses.splice(bonusIndex, 1);
+            }
+        })
+    }
+
+    bubbleAndTopCollision(){
+        this.bubbles.forEach((bubble) => { //bubble collision with spike
+            if(bubble.hitTop()){
+                this.sound.poppedBubble();
+                this.score += 500;
+                document.getElementById("score").innerHTML = `Score: ${this.score}`;
+                const bubbleIndex = this.bubbles.indexOf(bubble);
+                this.bubbles.splice(bubbleIndex, 1);
             }
         })
     }

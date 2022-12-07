@@ -36,10 +36,10 @@ export default class Bubble {
 
     heightDetermination(){
         if(this.size === 1){
-            return 120;
+            return 110;
         }
         else {
-            return 120 + this.size * 50;
+            return 110 + this.size * 50;
         }
     }
 
@@ -53,7 +53,7 @@ export default class Bubble {
         this.yPos += this.yVel;
 
         //only do the accelaration if it has reached the max height
-        if(this.yPos < (this.canvas.height - this.heightAllowed + 120)){ //offset so gravity can start to do something first
+        if(this.yPos < (this.canvas.height - this.heightAllowed + 110)){ //offset so gravity can start to do something first
             this.maxHeightReached = true;
         }
         if(this.maxHeightReached){
@@ -82,16 +82,23 @@ export default class Bubble {
     }
 
     hitUpperLimit(){
+        if(this.delay > 0){
+            this.delay--;
+        }
         //first conditional checks to see if it's too high
         //second conditional checks to see if it's going up
         //third conditional makes sure it waits a second before causing it to come back down
 
         //I actually think I only need the first two conditionals
-        if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0)){
+        // if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0)){
 
-        // if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0) && (this.delay <= 0)){
+        if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0) && (this.delay <= 0)){
             this.yVel = 0;
             // this.yVel = -this.yVel //this is the previous logic (without gravity)
         }
+    }
+
+    hitTop(){
+        return this.yPos < this.radius //if any part if it touches the top
     }
 }

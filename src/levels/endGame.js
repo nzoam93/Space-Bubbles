@@ -18,7 +18,7 @@ export default class EndGame{
         this.ctx.fillStyle = "red";
         this.ctx.textAlign = "center";
         this.ctx.fillText(`GAME OVER. Your score was ${this.score}`, canvas.width/2, canvas.height * 0.3);
-        this.ctx.fillText(`Click the "restart" button to play again`, canvas.width/2, canvas.height * 0.6);
+        this.ctx.fillText(`Click "Restart" to play again`, canvas.width/2, canvas.height * 0.6);
 
     }
 
