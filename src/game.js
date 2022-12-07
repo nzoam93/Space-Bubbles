@@ -10,6 +10,7 @@ import Level3 from "./levels/level3.js";
 import Bonus from "./bonus.js";
 import InBetweenLevel from "./levels/inBetweenLevel.js";
 import EndGame from "./levels/endGame.js";
+import Level4 from "./levels/level4.js";
 
 export default class Game{
     constructor(canvas, ctx, canvasBackground){
@@ -172,6 +173,12 @@ export default class Game{
             }
             else if(this.levelNumber === 2){
                 this.level = new Level3(this.player)
+            }
+            else if(this.levelNumber === 3){
+                this.level = new Level4(this.player)
+            }
+            else if(this.levelNumber === 4){
+                new EndGame(this.score, this.ctx, this.canvasBackground);
             }
 
             this.levelNumber++; //use to increment it automatically
