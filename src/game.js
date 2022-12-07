@@ -1,4 +1,5 @@
-import Player from "./player.js";
+// import Player from "./playerWithoutAnimation.js";
+import Player from "./playerWithAnimation.js";
 import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
 import Baseball from "./baseball.js";
@@ -43,6 +44,7 @@ export default class Game{
 
         this.sound.playThemeSong();
         this.levelNumber = 1;
+        this.score = 0;
 
         document.getElementById("lives").innerHTML = "Lives: 3"
 
@@ -105,6 +107,8 @@ export default class Game{
 
         //see if the game is over
         this.gameOver();
+
+        this.updateScore();
     }
 
     //bubble and spike collision
@@ -113,7 +117,6 @@ export default class Game{
             if(this.spikeController.collideWithBubble(bubble)){
                 this.sound.poppedBubble();
                 this.score += 50;
-                document.getElementById("score").innerHTML = `Score: ${this.score}`;
                 const bubbleIndex = this.bubbles.indexOf(bubble);
                 this.bubbles.splice(bubbleIndex, 1);
                 let newBubbleSize = bubble.size - 1; //decrease the size of the bubble
@@ -153,7 +156,6 @@ export default class Game{
         this.bonuses.forEach((bonus) => {
             if(this.player.collideWithBonus(bonus)){
                 this.score += 100;
-                document.getElementById("score").innerHTML = `Score: ${this.score}`;
                 const bonusIndex = this.bonuses.indexOf(bonus);
                 this.bonuses.splice(bonusIndex, 1);
             }
@@ -165,11 +167,17 @@ export default class Game{
             if(bubble.hitTop()){
                 this.sound.poppedBubble();
                 this.score += 500;
-                document.getElementById("score").innerHTML = `Score: ${this.score}`;
                 const bubbleIndex = this.bubbles.indexOf(bubble);
                 this.bubbles.splice(bubbleIndex, 1);
             }
         })
+    }
+
+    updateScore(){
+        this.ctx.font = "25px Fantasy";
+        this.ctx.fillStyle = "white";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 40);
     }
 
 
@@ -178,9 +186,8 @@ export default class Game{
         if(this.level.levelComplete()){
             this.pauseGame();
             this.score += this.timer.seconds * 10;
-            document.getElementById("score").innerHTML = `Score: ${this.score}`;
 
-            new InBetweenLevel(this.timer.seconds, this.ctx, this.canvasBackground);
+            new InBetweenLevel(this.timer.seconds, this.ctx, this.canvasBackground, this.score);
             setTimeout(this.pauseGame.bind(this), 4000); //bind so it doesn't lose context! Pauses the game for 4 secs
 
             if (this.levelNumber === 1){

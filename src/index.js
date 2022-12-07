@@ -5,7 +5,7 @@ import Sound from "./sounds.js";
 //defining canvas
 const canvas = document.getElementById("game");
 canvas.width = 1000;
-canvas.height = 500;
+canvas.height = 300;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/background.png'
 const ctx = canvas.getContext("2d");

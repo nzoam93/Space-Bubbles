@@ -5,19 +5,19 @@ export default class Level3{
         this.numBubbles = 50; //I don't think I actually need this one
         this.bubbles = [];
         this.player = player;
+        this.canvas = document.getElementById("game");
         this.setInfo();
         this.createBubble();
     }
 
     setInfo(){
         document.getElementById("level").innerHTML = "Level: 3";
-        this.player.xPos = 400;
+        this.player.xPos = this.canvas.width / 2 - 25;
     }
 
     createBubble(){
-        let canvas = document.getElementById("game");
-        this.bubbles.push(new Bubble(700, canvas.height - 50,1,2,5));
-        this.bubbles.push(new Bubble(50, canvas.height - 50,1,2,2));
+        this.bubbles.push(new Bubble(700, this.canvas.height - 50,1,2,5));
+        this.bubbles.push(new Bubble(50, this.canvas.height - 50,1,2,2));
     }
 
     levelComplete(){
