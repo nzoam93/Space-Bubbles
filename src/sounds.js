@@ -1,5 +1,3 @@
-
-
 export default class Sound{
     constructor(){
         this.isMuted = true; //during testing, keeping it muted

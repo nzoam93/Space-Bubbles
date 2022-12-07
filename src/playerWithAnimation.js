@@ -1,12 +1,9 @@
-import Sound from "./sounds.js";
-
 export default class Player{
     constructor(xPos, yPos, bulletController, sound){
         this.xPos = xPos;
         this.yPos = yPos;
-
         this.vel = 4;
-        this.lives = 1;
+        this.lives;
         this.immunity = 0;
         this.bulletController = bulletController;
         this.sound = sound;
@@ -137,6 +134,4 @@ export default class Player{
             this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
         }
     }
-
-
 }

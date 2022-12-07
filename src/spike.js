@@ -1,12 +1,9 @@
-
-
 export default class Spike{
     constructor(xPos, yPos, vel, damage){
         this.xPos = xPos;
         this.yPos = yPos;
         this.vel = vel;
         this.damage = damage;
-
         this.width = 10;
 
         let canvas = document.getElementById("game");
@@ -23,12 +20,9 @@ export default class Spike{
         ctx.fillStyle = this.color;
         this.yPos -= this.vel;
         ctx.drawImage(this.spike, 0, 0, 6, 32, this.xPos, this.yPos, this.width, this.height);
-        // previous logic below
-        // ctx.fillRect(this.xPos, this.yPos, this.width, this.height);
     }
 
-    //actual collisionDetection
-    //https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+    //collisionDetection with bubble
     collideWithBubble(sprite){
         sprite.height = sprite.radius * 2; //defined so that a bubble with a radius can also work in the collision detection
         sprite.width = sprite.radius * 2;
@@ -45,5 +39,4 @@ export default class Spike{
         }
         return false;
     }
-
 }

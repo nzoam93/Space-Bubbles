@@ -1,6 +1,5 @@
     import Bubble from "../bubble.js";
 
-
     export default class Level2{
         constructor(player){
             this.numBubbles = 18;

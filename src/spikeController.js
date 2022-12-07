@@ -1,9 +1,9 @@
 import Spike from "./spike.js";
 
 export default class SpikeController{
-    spikes = [];
-
-    constructor(){}
+    constructor(){
+        this.spikes = [];
+    }
 
     shoot(xPos, yPos, vel, damage) {
         if(this.spikes.length < 1){ //limits the number of spikes

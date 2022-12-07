@@ -21,12 +21,13 @@ export default class Level4{
         this.bubbles.push(new Bubble(50, this.canvas.height - 50,1,2,2));
         this.bubbles.push(new Bubble(600, this.canvas.height - 400,-1,2,5));
         this.bubbles.push(new Bubble(600, this.canvas.height - 50,-1,2,2));
-        this.bubbles.push(new Bubble(800, this.canvas.height - 200,-1,2,4));
+        this.bubbles.push(new Bubble(500, this.canvas.height - 250,-1,2,4));
     }
 
     createBubbleDynamically(){
+        let canvas = document.getElementById("game");
         setInterval(()=>{
-            this.bubbles.push(new Bubble(800, this.canvas.height - 400,-1,2,5));
+            this.bubbles.push(new Bubble(500, this.canvas.height - 450,-1,2,5));
         }, 10000)
     }
 

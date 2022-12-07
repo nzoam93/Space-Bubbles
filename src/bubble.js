@@ -27,27 +27,19 @@ export default class Bubble {
         this.canvas = document.getElementById("game");
     }
 
-
-
+    //determines how big the bubble is (its radius)
     sizeDetermination(){
-        if(this.size === 1){
-            return 5; //smallest bubble
-        }
-        else {
-            return (this.size - 1) * 10; //bigger bubbles
-        }
+        if(this.size === 1) return 5; //smallest bubble
+        else return (this.size - 1) * 10; //bigger bubbles
     }
 
+    //determines how high the bubble can go before coming back down
     heightDetermination(){
-        if(this.size === 1){
-            return 110;
-        }
-        else {
-            return 110 + this.size * 50;
-        }
+        if(this.size === 1) return 110;
+        else return (110 + this.size * 50);
     }
 
-
+    //draws the bubble. This is called in the game loop for each bubble
     draw(ctx){
         ctx.fillStyle = this.color;
         this.hitWall(ctx);
@@ -63,13 +55,22 @@ export default class Bubble {
         if(this.maxHeightReached){
             this.yVel += this.acc;
         }
+
+        //actually draw the circle
         ctx.beginPath();
         ctx.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.fill();
-        // ctx.fillRect(this.xPos, this.yPos, this.width, this.height);
+
+        //draw a shiny inner part
+            // ctx.fillStyle = "white";
+            // ctx.beginPath();
+            // ctx.arc(this.xPos - this.radius * 0.4, this.yPos + this.radius * 0.4, 2, 0, 2 * Math.PI);
+            // ctx.stroke();
+            // ctx.fill();
     }
 
+    //turn around if it hits the wall
     hitWall(){
         if(this.xPos - this.radius < 0){
             this.xVel = -this.xVel;
@@ -79,26 +80,29 @@ export default class Bubble {
         }
     }
 
+    //turn around if it hits the ground
     hitGround(){
         if(this.yPos > this.canvas.height - this.radius){
             this.yVel = -this.yVel;
         }
     }
 
+    //turn around if it has gone too high for its bubble type
     hitUpperLimit(){
-        if(this.delay > 0){
-            this.delay--;
-        }
+        //decrements the delay count (note: the delay is there so the bubble doesn't immediately come down)
+        if(this.delay > 0) this.delay--;
+
+
         //first conditional checks to see if it's too high
         //second conditional checks to see if it's going up
         //third conditional makes sure it waits a second before causing it to come back down
-
         if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0) && (this.delay <= 0)){
             this.yVel = 0;
             // this.yVel = -this.yVel //this is the previous logic (without gravity)
         }
     }
 
+    //returns true if the bubble has reached the top of the screen. Used in the game loop
     hitTop(){
         return this.yPos < this.radius //if any part if it touches the top
     }

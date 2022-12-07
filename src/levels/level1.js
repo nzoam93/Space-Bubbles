@@ -2,7 +2,7 @@ import Bubble from "../bubble.js";
 
 export default class Level1{
     constructor(player){//player used in other levels, so I just kept it consistent here
-        this.numBubbles = 3;
+        this.player = player;
         this.bubbles = [];
         this.canvas = document.getElementById("game");
 
@@ -11,10 +11,8 @@ export default class Level1{
     }
 
     setInfo(){
-        //change the background image
-        // this.canvas.style.backgroundImage = "url('https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')";
-
         document.getElementById("level").innerHTML = "Level: 1";
+        this.player.xPos = this.canvas.width / 2 - 25;
     }
 
     createBubble(){
@@ -24,6 +22,4 @@ export default class Level1{
     levelComplete(){
         return this.bubbles.length === 0;
     }
-
-
 }

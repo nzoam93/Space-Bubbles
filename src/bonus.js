@@ -1,8 +1,6 @@
+//defined outside so it only has to load once
 const coin = new Image();
 coin.src = "../imgs/coin.png"
-
-const canvas = document.getElementById("game");
-//defined outside so it only has to load once
 
 export default class Bonus{
     constructor(ctx, bubbleX, bubbleY){

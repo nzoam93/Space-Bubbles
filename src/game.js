@@ -2,7 +2,6 @@
 import Player from "./playerWithAnimation.js";
 import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
-import Baseball from "./baseball.js";
 import Sound from "./sounds.js";
 import Timer from "./timer.js";
 import Level1 from "./levels/level1.js";
@@ -17,63 +16,54 @@ export default class Game{
     constructor(canvas, ctx, canvasBackground){
         this.canvas = canvas;
         this.ctx = ctx;
-
-        //shadow stuff
-        this.ctx.shadowColor = "black";
-        this.ctx.shadowOffsetX = 3;
-        this.ctx.shadowOffsetY = 3;
-        this.ctx.shadowBlur = 10;
-        
         this.canvasBackground = canvasBackground;
-        this.sound = new Sound(); //sound class
-        this.spikeController = new SpikeController(); //spikeController
-        this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound); //player
-        this.baseball = new Baseball(50,50) //baseball. Get rid of eventually
-        this.gameLength = 20;
-        this.timer = new Timer(this.gameLength); //timer
+        this.sound = new Sound();
+        this.spikeController = new SpikeController();
+        this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
+        this.gameLength = 20; //used for timer
+        this.timer = new Timer(this.gameLength);
         this.level;
         this.levelNumber = 1;
         this.bubbles;
         this.bonuses = [];
 
-
         this.score = 0;
         this.highScore = 0;
-        this.gameSpeed = 60;
-        this.gameIsOver = false;
+        this.gameSpeed = 60; //determines how many times a second the game runs
         this.paused = false;
-
-        this.timedLoop;
+        this.timedLoop; //used by game loop
     }
 
     startGame(){
-         //starting on level 1 when you first click the play button
+        //starts at level 1
+        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
+        this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
+
+        //calls the game loop
         this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
 
+        //this block is for restarting the game properly
         this.sound.playThemeSong();
         this.levelNumber = 1;
         this.score = 0;
-
+        this.timer.startTime = this.gameLength;
+        this.timer.countdownEl.style.color = "black";
+        this.player.lives = 3;
         document.getElementById("lives").innerHTML = "Lives: 3"
-
-
-        //starts at level 1
-        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
-        this.bubbles = this.level.bubbles;
     }
 
     //stopping the loop with the pause button
     pauseGame(){
         let pauseButton = document.getElementById("pauseButton");
         if (!this.paused){
-            clearInterval(this.timedLoop);
             this.paused = true;
+            clearInterval(this.timedLoop);
             pauseButton.innerHTML = "resume";
             this.sound.pauseThemeSong();
         }
         else {
-            this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
             this.paused = false;
+            this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
             pauseButton.innerHTML = "pause";
             this.sound.playThemeSong();
         }
@@ -81,6 +71,7 @@ export default class Game{
 
     //What should continuously happen throughout the game
     gameLoop(){
+        //timer counts down the seconds
         this.timer.countdown();
 
         //clear the screen and draws the background
@@ -91,24 +82,15 @@ export default class Game{
         this.spikeController.draw(this.ctx)
         this.player.draw(this.ctx)
 
-        //do the bonus logic
-        this.bonuses.forEach((bonus) => {
-            bonus.draw();
-            if(bonus.yPos > this.canvas.height){
-                const bonusIndex = this.bonuses.indexOf(bonus);
-                this.bonuses.splice(bonusIndex, 1);
-            }
-        })
-
-        //baseball!!!!!!!
-        this.baseball.draw(this.ctx);
-        this.baseball.update(this.ctx)
 
         //collision detection
         this.bubbleAndSpikeCollision();
         this.bubbleAndPlayerCollision();
-        this.bonusAndPlayerCollision();
         this.bubbleAndTopCollision();
+        this.bonusAndPlayerCollision();
+
+        //drop bonuses when appropriate
+        this.dropBonus();
 
         //update score and high score
         this.updateScore();
@@ -123,15 +105,19 @@ export default class Game{
 
     //bubble and spike collision
     bubbleAndSpikeCollision(){
-        this.bubbles.forEach((bubble) => { //bubble collision with spike
-            if(this.spikeController.collideWithBubble(bubble)){
+        this.bubbles.forEach((bubble) => {
+            if(this.spikeController.collideWithBubble(bubble)){ //if there is a bubble collision with spike
                 this.sound.poppedBubble();
                 this.score += 50;
+
+                //get rid of the current bubble
                 const bubbleIndex = this.bubbles.indexOf(bubble);
                 this.bubbles.splice(bubbleIndex, 1);
+
+                //create two smaller bubbles
                 let newBubbleSize = bubble.size - 1; //decrease the size of the bubble
                 if(newBubbleSize > 0){
-                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -2, newBubbleSize)); //add bubbles!
+                    this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, 1, -2, newBubbleSize));
                     this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -2, newBubbleSize));
                 }
 
@@ -161,6 +147,18 @@ export default class Game{
         })
     }
 
+    //if bubble goes off the screen
+    bubbleAndTopCollision(){
+        this.bubbles.forEach((bubble) => {
+            if(bubble.hitTop()){
+                this.sound.poppedBubble();
+                this.score += 500;
+                const bubbleIndex = this.bubbles.indexOf(bubble);
+                this.bubbles.splice(bubbleIndex, 1);
+            }
+        })
+    }
+
     //collecting bonus
     bonusAndPlayerCollision(){
         this.bonuses.forEach((bonus) => {
@@ -172,17 +170,17 @@ export default class Game{
         })
     }
 
-    bubbleAndTopCollision(){
-        this.bubbles.forEach((bubble) => { //bubble collision with spike
-            if(bubble.hitTop()){
-                this.sound.poppedBubble();
-                this.score += 500;
-                const bubbleIndex = this.bubbles.indexOf(bubble);
-                this.bubbles.splice(bubbleIndex, 1);
+    dropBonus(){
+        this.bonuses.forEach((bonus) => {
+            bonus.draw();
+            if(bonus.yPos > this.canvas.height){
+                const bonusIndex = this.bonuses.indexOf(bonus);
+                this.bonuses.splice(bonusIndex, 1);
             }
         })
     }
 
+    //updates the score on the canvas
     updateScore(){
         this.ctx.font = "25px Fantasy";
         this.ctx.fillStyle = "white";
@@ -198,12 +196,15 @@ export default class Game{
     //performs logic if the level is complete
     isLevelComplete(){
         if(this.level.levelComplete()){
-            this.pauseGame();
+            //get points for finishing early
             this.score += this.timer.seconds * 10;
 
+            //pause and unpause the game for 4 seconds
+            this.pauseGame();
             new InBetweenLevel(this.timer.seconds, this.ctx, this.canvasBackground, this.score);
             setTimeout(this.pauseGame.bind(this), 4000); //bind so it doesn't lose context! Pauses the game for 4 secs
 
+            //go to the next level or to the end of the game if finished all levels
             if (this.levelNumber === 1){
                 this.level = new Level2(this.player);
             }
@@ -218,8 +219,8 @@ export default class Game{
             }
 
             this.levelNumber++; //use to increment it automatically
-            this.timer.startTime = this.levelNumber * 20;
-            this.timer.countdownEl.style.color = "black"
+            this.timer.startTime = this.levelNumber * 20; //increase the timer count by 20 each level
+            this.timer.countdownEl.style.color = "black" //puts it back to black if it was red before
             this.bubbles = this.level.bubbles; //actually makes the array so it can draw the bubbles!
         }
     }
@@ -228,17 +229,13 @@ export default class Game{
     //gameOver logic
     gameOver(){
         if((this.player.lives === 0) || (this.timer.minutes <= 0 && this.timer.seconds <= 0)){
-            this.isGameOver = true;
             this.sound.gameOver();
             new EndGame(this.score, this.ctx, this.canvasBackground);
             clearInterval(this.timedLoop);
             document.getElementById("pauseButton").style.display = "none";
-            document.getElementById("playButton").style.display = "block"
-            this.timer.startTime = this.gameLength;
-            this.timer.countdownEl.style.color = "black"
+            document.getElementById("playButton").style.display = "block";
             document.getElementById("playButton").innerHTML = "Restart"
             this.sound.pauseThemeSong();
-            this.player.lives = 3;
         }
     }
 
