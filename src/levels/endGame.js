@@ -3,7 +3,6 @@ export default class EndGame{
         this.score = score;
         this.ctx = ctx;
         this.canvasBackground = canvasBackground;
-        // this.stringScore = JSON.stringify(score);
         this.setInfo();
     }
 
@@ -14,7 +13,7 @@ export default class EndGame{
             // this.ctx.drawImage(this.canvasBackground,0,0);
 
         //write text
-        this.ctx.font = "50px Fantasy";
+        this.ctx.font = "40px Arial";
         this.ctx.fillStyle = "red";
         this.ctx.textAlign = "center";
         this.ctx.fillText(`GAME OVER. Your score was ${this.score}`, canvas.width/2, canvas.height * 0.3);

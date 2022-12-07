@@ -17,6 +17,13 @@ export default class Game{
     constructor(canvas, ctx, canvasBackground){
         this.canvas = canvas;
         this.ctx = ctx;
+
+        //shadow stuff
+        this.ctx.shadowColor = "black";
+        this.ctx.shadowOffsetX = 3;
+        this.ctx.shadowOffsetY = 3;
+        this.ctx.shadowBlur = 10;
+        
         this.canvasBackground = canvasBackground;
         this.sound = new Sound(); //sound class
         this.spikeController = new SpikeController(); //spikeController
@@ -31,6 +38,7 @@ export default class Game{
 
 
         this.score = 0;
+        this.highScore = 0;
         this.gameSpeed = 60;
         this.gameIsOver = false;
         this.paused = false;
@@ -102,13 +110,15 @@ export default class Game{
         this.bonusAndPlayerCollision();
         this.bubbleAndTopCollision();
 
+        //update score and high score
+        this.updateScore();
+
         //see if the level is over
         this.isLevelComplete();
 
         //see if the game is over
         this.gameOver();
 
-        this.updateScore();
     }
 
     //bubble and spike collision
@@ -178,6 +188,10 @@ export default class Game{
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 40);
+        if(this.score > this.highScore){
+            this.highScore = this.score;
+        }
+        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width - 100, 80);
     }
 
 
