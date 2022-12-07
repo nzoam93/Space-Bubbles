@@ -29,14 +29,14 @@ export default class Spike{
 
     //actual collisionDetection
     //https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    collideWith(sprite){
+    collideWithBubble(sprite){
         sprite.height = sprite.radius * 2; //defined so that a bubble with a radius can also work in the collision detection
         sprite.width = sprite.radius * 2;
 
         //xPos of sprite on a circle is the MIDDLE. So you need to subtract the radius
         if(this.xPos < sprite.xPos + sprite.width - sprite.radius &&
            this.xPos + this.width > sprite.xPos - sprite.radius &&
-           this.yPos < sprite.yPos + sprite.height &&
+           this.yPos < sprite.yPos + sprite.height - sprite.radius &&
            this.yPos + this.height > sprite.yPos
         ){
             //collision detected

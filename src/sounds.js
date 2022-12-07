@@ -7,6 +7,7 @@ export default class Sound{
         this.gameOverSound = new Audio("../sounds/gameOver.ogg");
         this.laserSound = new Audio("../sounds/laser4.wav");
         this.ow = new Audio("../sounds/ow.m4a");
+        this.pop = new Audio("../sounds/bubblePop.m4a")
     }
 
     playThemeSong(){
@@ -25,19 +26,11 @@ export default class Sound{
         }
     }
 
-    // pauseGameOverMusic(){
-    //     this.gameOverSound.pause();
-    // }
-
     projectile(){ //currently, this is controlled with a NEW SOUND separately in the player class. This isn't quite right
         if(!this.isMuted){
             this.laserSound.play();
         }
     }
-
-    // pauseProjectile(){
-    //     this.laserSound.pause();
-    // }
 
     playerHit(){
         if(!this.isMuted){
@@ -45,17 +38,23 @@ export default class Sound{
         }
     }
 
-    // pausePlayerHit(){
-    //     this.ow.pause();
-    // }
+    poppedBubble(){
+        if(!this.isMuted){
+            this.pop.play();
+        }
+    }
 
     muteAndUnmute(){
         if(this.isMuted){
             this.isMuted = false;
+
+            // test1.style.backgroundImage="url('../imgs/mute.png')";
             this.playThemeSong();
         }
         else{
             this.isMuted = true;
+
+            // test.style.backgroundImage="url('../imgs/volume.png')";
             this.pauseThemeSong();
         }
     }

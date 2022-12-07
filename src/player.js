@@ -1,15 +1,16 @@
 import Sound from "./sounds.js";
 
 export default class Player{
-    constructor(xPos, yPos, bulletController){
+    constructor(xPos, yPos, bulletController, sound){
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = 50;
         this.height = 50;
         this.vel = 4;
-        this.lives = 3;
+        this.lives = 1;
         this.immunity = 0;
         this.bulletController = bulletController;
+        this.sound = sound;
 
         //event listeners for the keystrokes
         document.addEventListener("keydown", this.keydown);
@@ -61,8 +62,7 @@ export default class Player{
         }
         if(e.code === "Space"){
             this.shootPressed = true;
-            let sound = new Sound();
-            sound.projectile();
+            this.sound.projectile();
         }
     }
 
@@ -78,20 +78,33 @@ export default class Player{
         }
     }
 
-    collideWith(sprite){
-        sprite.height = sprite.radius; //defined so that a bubble with a radius can also work in the collision detection
-        sprite.width = sprite.radius;
+    collideWithBubble(bubble){
+        bubble.height = bubble.radius * 2; //defined so that a bubble with a radius can also work in the collision detection
+        bubble.width = bubble.radius * 2;
 
-        if(this.xPos < sprite.xPos + sprite.width &&
-           this.xPos + this.width > sprite.xPos &&
-           this.yPos < sprite.yPos + sprite.height &&
-           this.yPos + this.height > sprite.yPos
+        //xPos of bubble on a circle is the MIDDLE. So you need to subtract the radius
+        if(this.xPos < bubble.xPos + bubble.width - bubble.radius &&
+           this.xPos + this.width > bubble.xPos - bubble.radius &&
+           this.yPos < bubble.yPos + bubble.height - bubble.radius &&
+           this.yPos + this.height > bubble.yPos
         ){
             //collision detected
-            // sprite.takeDamage(this.damage);
+            // bubble.takeDamage(this.damage);
             return true;
         }
         return false;
+    }
+
+    collideWithBonus(bonus){
+        console.log()
+        if(this.xPos < bonus.xPos + bonus.width &&
+            this.xPos + this.width > bonus.xPos &&
+            this.yPos < bonus.yPos + bonus.height &&
+            this.yPos + this.height > bonus.yPos
+         ){
+             return true;
+         }
+         return false;
     }
 
     shoot(){

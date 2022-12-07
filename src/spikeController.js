@@ -26,9 +26,9 @@ export default class SpikeController{
         return spike.yPos <= 0
     }
 
-    collideWith(sprite){
+    collideWithBubble(sprite){
         return this.spikes.some(spike =>{ //some returns true if there is at least one spike colliding
-            if(spike.collideWith(sprite)){ //spike also has a collidesWith method
+            if(spike.collideWithBubble(sprite)){ //spike also has a collidesWith method
                 const index = this.spikes.indexOf(spike);
                 this.spikes.splice(index, 1); //take the spike off of the screen since it already has hit something
                 return true;

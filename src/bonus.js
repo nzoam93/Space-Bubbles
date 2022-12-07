@@ -1,41 +1,23 @@
+const coin = new Image();
+coin.src = "../imgs/coin.png"
+
+const canvas = document.getElementById("game");
+//defined outside so it only has to load once
+
 export default class Bonus{
-    constructor(bubble){
-        this.bubble = bubble;
-        this.bonuses = [];
-        this.yPos = bubble.yPos;
-        this.coin = new Image();
-        this.coin.src = "../imgs/coin.png"
-        this.color = "blue"
-        this.vel = 2;
+    constructor(ctx, bubbleX, bubbleY){
+        this.ctx = ctx;
+        this.xPos = bubbleX;
+        this.yPos = bubbleY;
+        this.width = 20
+        this.height = 20
+        this.vel = 0;
+        this.acc = 0.01;
     }
 
-    dropCoin(){
-        console.log("coin");
+    draw(){
+        this.yPos += this.vel;
+        this.vel += this.acc;
+        this.ctx.drawImage(coin, this.xPos, this.yPos, this.width, this.height);
     }
-
-    draw(ctx){
-        ctx.fillStyle = this.color;
-        ctx.drawImage(this.coin, 0, 0);
-        console.log("draw");
-
-    }
-
-    //actual collisionDetection
-    // collideWith(sprite){
-    //     sprite.height = sprite.radius * 2; //defined so that a bubble with a radius can also work in the collision detection
-    //     sprite.width = sprite.radius * 2;
-
-    //     //xPos of sprite on a circle is the MIDDLE. So you need to subtract the radius
-    //     if(this.xPos < sprite.xPos + sprite.width - sprite.radius &&
-    //        this.xPos + this.width > sprite.xPos - sprite.radius &&
-    //        this.yPos < sprite.yPos + sprite.height &&
-    //        this.yPos + this.height > sprite.yPos
-    //     ){
-    //         //collision detected
-    //         // sprite.takeDamage(this.damage);
-    //         return true;
-    //     }
-    //     return false;
-    // }
-
 }

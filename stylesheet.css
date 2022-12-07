@@ -52,3 +52,8 @@ h1{
     width: 150px;
     /* makes it not auto-update the width when it changes */
 }
+
+#muteButton{
+    height: 30px;
+    width: 30px;
+}

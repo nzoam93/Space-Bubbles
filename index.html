@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/x-icon" href="./imgs/coin.ico"> <!--adds an image to the browser-->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./stylesheet.css">
     <script src="./src/index.js" type="module" defer></script> <!--type="module" is a workaround for webpack-->
     <title>Bubble Trouble V2</title>
@@ -19,7 +19,7 @@
         <button id="pauseButton" class="gameButton">Pause</button>
         <div id="score" class="bottomInfo">Score: 0</div>
         <div id="timer">Timer</div>
-        <button id="muteButton"><i class="fa-sharp fa-solid fa-volume"></i></button>
+        <input id="muteButton" type="image" src="/imgs/volume.png">
     </div>
 </body>
 </html>

@@ -86,11 +86,4 @@ export default class Bubble {
             this.yVel = -this.yVel;
         }
     }
-
-
-    bonusCall(ctx){
-        if(this.size >2){
-            this.bonuses.push(new Bonus(this));
-        }
-    }
 }
