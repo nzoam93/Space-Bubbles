@@ -13,6 +13,7 @@ export default class Sound{
     playThemeSong(){
         if(!this.isMuted){
             this.backgroundMusic.play();
+            this.backgroundMusic.loop = true;
         }
     }
 

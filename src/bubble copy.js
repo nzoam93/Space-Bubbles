@@ -4,7 +4,8 @@ export default class Bubble {
         "orange",
         "green",
         "blue",
-        "white"
+        "purple",
+        "brown"
     ];
 
     constructor(xPos, yPos, xVel, yVel, size){
@@ -19,8 +20,6 @@ export default class Bubble {
         this.heightAllowed = this.heightDetermination();
         this.delay = 60; //used for when a bubble spawns to allow it to go up for one second
         this.canvas = document.getElementById("game");
-        this.acc = 0.03;
-        this.maxHeightReached = false;
     }
 
 
@@ -36,10 +35,10 @@ export default class Bubble {
 
     heightDetermination(){
         if(this.size === 1){
-            return 120;
+            return 100;
         }
         else {
-            return 120 + this.size * 50;
+            return 100 + this.size * 50;
         }
     }
 
@@ -51,14 +50,6 @@ export default class Bubble {
         this.hitUpperLimit(ctx);
         this.xPos += this.xVel;
         this.yPos += this.yVel;
-
-        //only do the accelaration if it has reached the max height
-        if(this.yPos < (this.canvas.height - this.heightAllowed + 120)){ //offset so gravity can start to do something first
-            this.maxHeightReached = true;
-        }
-        if(this.maxHeightReached){
-            this.yVel += this.acc;
-        }
         ctx.beginPath();
         ctx.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI);
         ctx.stroke();
@@ -82,16 +73,15 @@ export default class Bubble {
     }
 
     hitUpperLimit(){
+        if(this.delay > 0){
+            this.delay--;
+        }
+
         //first conditional checks to see if it's too high
         //second conditional checks to see if it's going up
         //third conditional makes sure it waits a second before causing it to come back down
-
-        //I actually think I only need the first two conditionals
-        if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0)){
-
-        // if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0) && (this.delay <= 0)){
-            this.yVel = 0;
-            // this.yVel = -this.yVel //this is the previous logic (without gravity)
+        if((this.yPos < this.canvas.height - this.heightAllowed) && (this.yVel < 0) && (this.delay <= 0)){
+            this.yVel = -this.yVel 
         }
     }
 }

@@ -11,7 +11,7 @@ export default class Spike{
 
         let canvas = document.getElementById("game");
         this.height = canvas.height;
-        this.color = "black"
+        this.color = "white"
 
         //adding in the spike image
         this.spike = new Image();

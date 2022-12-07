@@ -7,6 +7,7 @@ export default class Level4{
         this.player = player;
         this.setInfo();
         this.createBubble();
+        this.createBubbleDynamically(); //makes it much harder. creates bubble every 10 secs
     }
 
     setInfo(){
@@ -21,6 +22,13 @@ export default class Level4{
         this.bubbles.push(new Bubble(600, canvas.height - 400,-1,2,5));
         this.bubbles.push(new Bubble(600, canvas.height - 50,-1,2,2));
         this.bubbles.push(new Bubble(800, canvas.height - 200,-1,2,4));
+    }
+
+    createBubbleDynamically(){
+        let canvas = document.getElementById("game");
+        setInterval(()=>{
+            this.bubbles.push(new Bubble(800, canvas.height - 400,-1,2,5));
+        }, 10000)
     }
 
     levelComplete(){

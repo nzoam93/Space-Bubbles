@@ -42,14 +42,17 @@ export default class Game{
         this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
 
         this.sound.playThemeSong();
+        this.levelNumber = 1;
+
         document.getElementById("lives").innerHTML = "Lives: 3"
 
 
         //starts at level 1
-        this.level = new Level1(this.player); //setting it to level 1. Should change later
+        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles;
     }
 
+    //stopping the loop with the pause button
     pauseGame(){
         let pauseButton = document.getElementById("pauseButton");
         if (!this.paused){
@@ -65,7 +68,6 @@ export default class Game{
             this.sound.playThemeSong();
         }
     }
-    //stopping the loop with the pause button
 
     //What should continuously happen throughout the game
     gameLoop(){
@@ -166,7 +168,7 @@ export default class Game{
             document.getElementById("score").innerHTML = `Score: ${this.score}`;
 
             new InBetweenLevel(this.timer.seconds, this.ctx, this.canvasBackground);
-            setTimeout(this.pauseGame.bind(this), 3000); //bind so it doesn't lose context!
+            setTimeout(this.pauseGame.bind(this), 4000); //bind so it doesn't lose context! Pauses the game for 4 secs
 
             if (this.levelNumber === 1){
                 this.level = new Level2(this.player);
@@ -183,6 +185,7 @@ export default class Game{
 
             this.levelNumber++; //use to increment it automatically
             this.timer.startTime = this.levelNumber * 20;
+            this.timer.countdownEl.style.color = "black"
             this.bubbles = this.level.bubbles; //actually makes the array so it can draw the bubbles!
         }
     }

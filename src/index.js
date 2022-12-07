@@ -8,7 +8,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 500;
 const canvasBackground = new Image();
-canvasBackground.src = './imgs/bubblesBackground.png'
+canvasBackground.src = './imgs/background.png'
 
 //image is asyncrhonous. It hasn't loaded yet. Thus, we need an onload
 canvasBackground.onload = ()=> {
