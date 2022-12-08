@@ -5,11 +5,12 @@ body{
     padding: 0;
     margin: 0;
     height: 100vh;
-    background: linear-gradient(
+     /* background: linear-gradient(
         0deg,
         rgb(224, 224, 132) 0%,
         rgb(111, 14, 207) 100%
-    );
+    ); */
+    background-image: url("./imgs/blurredBackground.png");
     font-family: fantasy;
 }
 

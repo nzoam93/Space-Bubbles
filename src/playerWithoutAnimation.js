@@ -1,5 +1,5 @@
 export default class Player{
-    constructor(xPos, yPos, bulletController, sound){
+    constructor(xPos, yPos, spikeController, sound){
         this.xPos = xPos;
         this.yPos = yPos;
         this.width = 50;
@@ -7,7 +7,7 @@ export default class Player{
         this.vel = 4;
         this.lives = 1;
         this.immunity = 0;
-        this.bulletController = bulletController;
+        this.spikeController = spikeController;
         this.sound = sound;
 
         //event listeners for the keystrokes
@@ -108,11 +108,11 @@ export default class Player{
     shoot(){
         if(this.shootPressed){
             const speed = 5;
-            const delay = 7; //for delay between bullets
+            const delay = 7; //for delay between spikes
             const damage = 1;
-            const bulletX = this.xPos + this.width / 2;
-            const bulletY = this.yPos;
-            this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
+            const spikeX = this.xPos + this.width / 2;
+            const spikeY = this.yPos;
+            this.spikeController.shoot(spikeX, spikeY, speed, damage, delay);
         }
     }
 

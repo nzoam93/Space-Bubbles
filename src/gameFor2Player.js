@@ -1,5 +1,7 @@
 // import Player from "./playerWithoutAnimation.js";
-import Player from "./playerWithAnimation.js";
+// import Player from "./playerWithAnimation.js";
+import Player1 from "./player1.js"
+import Player2 from "./player2.js";
 import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
 import Sound from "./sounds.js";
@@ -19,7 +21,11 @@ export default class Game{
         this.canvasBackground = canvasBackground;
         this.sound = new Sound();
         this.spikeController = new SpikeController();
-        this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
+        this.players = [];
+        this.player1 = new Player1(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
+        this.player2 = new Player2(canvas.width / 2 + 15, canvas.height - 50, this.spikeController, this.sound);
+        this.players.push(this.player1, this.player2);
+        console.log(this.players);
         this.gameLength = 20; //used for timer
         this.timer = new Timer(this.gameLength);
         this.level;
@@ -36,7 +42,7 @@ export default class Game{
 
     startGame(){
         //starts at level 1
-        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
+        this.level = new Level1(this.player1, this.player2); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
 
         //calls the game loop
@@ -48,9 +54,11 @@ export default class Game{
         this.score = 0;
         this.timer.startTime = this.gameLength;
         this.timer.countdownEl.style.color = "white";
-        this.player.lives = 3;
+        this.player1.lives = 3;
+        this.player2.lives = 3;
         document.getElementById("lives").innerHTML = "Lives: 3";
-        this.player.immunity = 0;
+        this.player1.immunity = 0;
+        this.player2.immunity = 0;
     }
 
     //stopping the loop with the pause button
@@ -81,19 +89,31 @@ export default class Game{
 
         //draw the spikes, player
         this.spikeController.draw(this.ctx)
-        this.player.draw(this.ctx)
+        this.player1.draw(this.ctx)
+        this.player2.draw(this.ctx)
 
 
-        //collision detection
+
+        //collision detection for bubbles
         this.bubbleAndSpikeCollision();
-        this.bubbleAndPlayerCollision();
         this.bubbleAndTopCollision();
-        this.bonusAndPlayerCollision();
+
+        //collision detection for player1
+        this.bubbleAndPlayer1Collision();
+        this.bonusAndPlayer1Collision();
+
+        //collision detection for player2
+        this.bubbleAndPlayer2Collision();
+        this.bonusAndPlayer2Collision();
 
         //decrement immunity and draw shield if appropriate
-        this.player.immunity--;
-        if(this.player.lives > 0 && this.player.immunity > 10) {
-            this.player.drawShield(this.ctx);
+        this.player1.immunity--;
+        if(this.player1.lives > 0 && this.player1.immunity > 10) {
+            this.player1.drawShield(this.ctx);
+        }
+        this.player2.immunity--;
+        if(this.player2.lives > 0 && this.player2.immunity > 10) {
+            this.player2.drawShield(this.ctx);
         }
 
         //drop bonuses when appropriate
@@ -142,20 +162,6 @@ export default class Game{
         })
     }
 
-    //bubble collision with player
-    bubbleAndPlayerCollision(){
-        this.bubbles.forEach((bubble) => {
-            if(this.player.collideWithBubble(bubble) && this.player.immunity <= 0){
-                this.player.immunity = this.gameSpeed * 1.5; //gives you 1.5 seconds of immunity!
-                this.player.lives--;
-                if(this.player.lives >= 0){
-                    document.getElementById("lives").innerHTML = `Lives: ${this.player.lives}`;
-                }
-                this.sound.playerHit();
-            }
-        })
-    }
-
     //if bubble goes off the screen
     bubbleAndTopCollision(){
         this.bubbles.forEach((bubble) => {
@@ -168,10 +174,39 @@ export default class Game{
         })
     }
 
-    //collecting bonus
-    bonusAndPlayerCollision(){
+    //bubble collision with player 1
+    bubbleAndPlayer1Collision(){
+        this.bubbles.forEach((bubble) => {
+            if(this.player1.collideWithBubble(bubble) && this.player1.immunity <= 0){
+                this.player1.immunity = this.gameSpeed * 1.5; //gives you 1.5 seconds of immunity!
+                this.player1.lives--;
+                if(this.player1.lives >= 0){
+                    document.getElementById("lives").innerHTML = `Lives: ${this.player1.lives}`;
+                }
+                this.sound.playerHit();
+            }
+        })
+    }
+
+     //bubble collision with player 2
+     bubbleAndPlayer2Collision(){
+        this.bubbles.forEach((bubble) => {
+            if(this.player2.collideWithBubble(bubble) && this.player2.immunity <= 0){
+                this.player2.immunity = this.gameSpeed * 1.5; //gives you 1.5 seconds of immunity!
+                this.player2.lives--;
+                if(this.player2.lives >= 0){
+                    document.getElementById("lives").innerHTML = `Lives: ${this.player2.lives}`;
+                }
+                this.sound.playerHit();
+            }
+        })
+    }
+
+
+    //collecting bonus for player 1
+    bonusAndPlayer1Collision(){
         this.bonuses.forEach((bonus) => {
-            if(this.player.collideWithBonus(bonus)){
+            if(this.player1.collideWithBonus(bonus)){
                 const bonusIndex = this.bonuses.indexOf(bonus);
                 this.bonuses.splice(bonusIndex, 1);
                 if(bonus.typeOfBonus === "coin"){
@@ -179,7 +214,24 @@ export default class Game{
                 }
                 else if(bonus.typeOfBonus === "shield"){
                     //give 5 seconds of immunity
-                    this.player.immunity = this.gameSpeed * 5;
+                    this.player1.immunity = this.gameSpeed * 5;
+                }
+            }
+        })
+    }
+
+     //collecting bonus for player 2
+     bonusAndPlayer2Collision(){
+        this.bonuses.forEach((bonus) => {
+            if(this.player2.collideWithBonus(bonus)){
+                const bonusIndex = this.bonuses.indexOf(bonus);
+                this.bonuses.splice(bonusIndex, 1);
+                if(bonus.typeOfBonus === "coin"){
+                    this.score += 100;
+                }
+                else if(bonus.typeOfBonus === "shield"){
+                    //give 5 seconds of immunity
+                    this.player2.immunity = this.gameSpeed * 5;
                 }
             }
         })
@@ -221,13 +273,13 @@ export default class Game{
 
             //go to the next level or to the end of the game if finished all levels
             if (this.levelNumber === 1){
-                this.level = new Level2(this.player);
+                this.level = new Level2(this.player1, this.player2);
             }
             else if(this.levelNumber === 2){
-                this.level = new Level3(this.player)
+                this.level = new Level3(this.player1, this.player2)
             }
             else if(this.levelNumber === 3){
-                this.level = new Level4(this.player)
+                this.level = new Level4(this.player1, this.player2)
             }
             else if(this.levelNumber === 4){
                 new EndGame(this.score, this.ctx, this.canvasBackground);
@@ -243,7 +295,7 @@ export default class Game{
 
     //gameOver logic
     gameOver(){
-        if((this.player.lives === 0) || (this.timer.minutes <= 0 && this.timer.seconds <= 0)){
+        if((this.player1.lives === 0) || (this.player2.lives === 0) || (this.timer.minutes <= 0 && this.timer.seconds <= 0)){
             this.sound.gameOver();
             new EndGame(this.score, this.ctx, this.canvasBackground);
             clearInterval(this.timedLoop);

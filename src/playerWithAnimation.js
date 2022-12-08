@@ -1,11 +1,11 @@
 export default class Player{
-    constructor(xPos, yPos, bulletController, sound){
+    constructor(xPos, yPos, spikeController, sound){
         this.xPos = xPos;
         this.yPos = yPos;
         this.vel = 4;
         this.lives;
         this.immunity = 0;
-        this.bulletController = bulletController;
+        this.spikeController = spikeController;
         this.sound = sound;
 
         //event listeners for the keystrokes
@@ -50,7 +50,7 @@ export default class Player{
     //draws a shield around the character if they collected a shield
     drawShield(ctx){
         ctx.beginPath();
-        ctx.arc(this.xPos + this.width / 2, this.yPos + this.height / 2 + 3, 30, 0, 2 * Math.PI);
+        ctx.arc(this.xPos + this.width / 2 + 6, this.yPos + this.height / 2 + 3, 42, 0, 2 * Math.PI);
         ctx.stroke();
     }
 
@@ -135,11 +135,11 @@ export default class Player{
     shoot(){
         if(this.shootPressed){
             const speed = 5;
-            const delay = 7; //for delay between bullets
+            const delay = 7; //for delay between spikes
             const damage = 1;
-            const bulletX = this.xPos + this.width / 2;
-            const bulletY = this.yPos;
-            this.bulletController.shoot(bulletX, bulletY, speed, damage, delay);
+            const spikeX = this.xPos + this.width / 2;
+            const spikeY = this.yPos;
+            this.spikeController.shoot(spikeX, spikeY, speed, damage, delay);
         }
     }
 }

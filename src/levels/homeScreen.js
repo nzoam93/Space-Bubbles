@@ -3,6 +3,7 @@ export default class Homescreen{
         this.canvas = canvas;
         this.ctx = ctx;
         this.canvasBackground = canvasBackground;
+        // this.canvasBackground.src = './imgs/blurredBackground.png'
         this.setInfo();
     }
 
