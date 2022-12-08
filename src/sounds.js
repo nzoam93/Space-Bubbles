@@ -47,13 +47,13 @@ export default class Sound{
         if(this.isMuted){
             this.isMuted = false;
 
-            // test1.style.backgroundImage="url('../imgs/mute.png')";
+            // test1.style.backgroundImage="url('./imgs/mute.png')";
             this.playThemeSong();
         }
         else{
             this.isMuted = true;
 
-            // test.style.backgroundImage="url('../imgs/volume.png')";
+            // test.style.backgroundImage="url('./imgs/volume.png')";
             this.pauseThemeSong();
         }
     }

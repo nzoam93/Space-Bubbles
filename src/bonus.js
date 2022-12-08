@@ -1,9 +1,9 @@
 //defined outside so it only has to load once
 const coin = new Image();
-coin.src = "../imgs/coin.png"
+coin.src = "./imgs/coin.png"
 
 const shield = new Image();
-shield.src = "../imgs/shield.png"
+shield.src = "./imgs/shield.png"
 
 export default class Bonus{
     constructor(ctx, bubbleX, bubbleY, typeOfBonus){

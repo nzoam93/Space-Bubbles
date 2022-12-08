@@ -14,7 +14,7 @@ export default class Player2{
 
         //animation stuff
         this.spriteImage = new Image();
-        this.spriteImage.src = "./../imgs/runningSprite.png";
+        this.spriteImage.src = "./imgs/runningSprite.png";
         this.spriteWidth = (540 / 9) + 2; //dividing the 540 width of sprite sheet by 9 sprites.
         this.spriteHeight = (233 / 4) + 3.2; //+3.2 at the end to make it look correct
         this.width = 30; //actual width of the sprite

@@ -12,7 +12,7 @@ export default class Spike{
 
         //adding in the spike image
         this.spike = new Image();
-        this.spike.src = "../imgs/spike.png"
+        this.spike.src = "./imgs/spike.png"
     }
 
 
