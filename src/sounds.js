@@ -1,11 +1,11 @@
 export default class Sound{
     constructor(){
         this.isMuted = true; //during testing, keeping it muted
-        this.backgroundMusic = new Audio("../sounds/Superhero_violin.ogg");
-        this.gameOverSound = new Audio("../sounds/gameOver.ogg");
-        this.laserSound = new Audio("../sounds/laser4.wav");
-        this.ow = new Audio("../sounds/ow.m4a");
-        this.pop = new Audio("../sounds/bubblePop.m4a")
+        this.backgroundMusic = new Audio("./sounds/Superhero_violin.ogg");
+        this.gameOverSound = new Audio("./sounds/gameOver.ogg");
+        this.laserSound = new Audio("./sounds/laser4.wav");
+        this.ow = new Audio("./sounds/ow.m4a");
+        this.pop = new Audio("./sounds/bubblePop.m4a")
     }
 
     playThemeSong(){
