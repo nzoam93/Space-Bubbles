@@ -2,17 +2,17 @@
 // import Player from "./playerWithAnimation.js";
 import Player1 from "./player1.js"
 import Player2 from "./player2.js";
-import SpikeController from "./spikeController.js";
-import Bubble from "./bubble.js";
-import Sound from "./sounds.js";
-import Timer from "./timer.js";
-import Level1 from "./levels/level1.js";
-import Level2 from "./levels/level2.js";
-import Level3 from "./levels/level3.js";
-import Bonus from "./bonus.js";
-import InBetweenLevel from "./levels/inBetweenLevel.js";
-import EndGame from "./levels/endGame.js";
-import Level4 from "./levels/level4.js";
+import SpikeController from "../spikeController.js";
+import Bubble from "../bubble.js";
+import Sound from "../sounds.js";
+import Timer from "../timer.js";
+import Level1 from "../levels/level1.js";
+import Level2 from "../levels/level2.js";
+import Level3 from "../levels/level3.js";
+import Bonus from "../bonus.js";
+import InBetweenLevel from "../levels/inBetweenLevel.js";
+import EndGame from "../levels/endGame.js";
+import Level4 from "../levels/level4.js";
 
 export default class Game{
     constructor(canvas, ctx, canvasBackground){

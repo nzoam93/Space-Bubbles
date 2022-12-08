@@ -31,6 +31,8 @@ Wireframe:
 
 ![image](https://user-images.githubusercontent.com/79114511/205189052-4011bcef-1bd0-418b-bee9-b983c305da6b.png)
 
+Technologies, Libraries, APIs:
+1. Canvas API
 
 Implementation Timeline:
 
