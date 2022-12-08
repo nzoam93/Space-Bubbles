@@ -47,7 +47,7 @@ export default class Game{
         this.levelNumber = 1;
         this.score = 0;
         this.timer.startTime = this.gameLength;
-        this.timer.countdownEl.style.color = "black";
+        this.timer.countdownEl.style.color = "white";
         this.player.lives = 3;
         document.getElementById("lives").innerHTML = "Lives: 3";
         this.player.immunity = 0;
@@ -235,7 +235,7 @@ export default class Game{
 
             this.levelNumber++; //use to increment it automatically
             this.timer.startTime = this.levelNumber * 20; //increase the timer count by 20 each level
-            this.timer.countdownEl.style.color = "black" //puts it back to black if it was red before
+            this.timer.countdownEl.style.color = "white" //puts it back to black if it was red before
             this.bubbles = this.level.bubbles; //actually makes the array so it can draw the bubbles!
         }
     }
