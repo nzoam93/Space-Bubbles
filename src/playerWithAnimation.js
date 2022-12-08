@@ -15,16 +15,15 @@ export default class Player{
         //animation stuff
         this.spriteImage = new Image();
         this.spriteImage.src = "./../imgs/runningSprite.png";
-        this.spriteWidth = 540 / 9 + 2; //+2 at the end to make it look correct
-        // this.spriteWidth = 30; //to only grab the actual skeleton
-        this.spriteHeight = 233 / 4;
+        this.spriteWidth = (540 / 9) + 2; //dividing the 540 width of sprite sheet by 9 sprites.
+        this.spriteHeight = (233 / 4) + 3.2; //+3.2 at the end to make it look correct
+        this.width = 30; //actual width of the sprite
+        this.height = 45; //actual height of the sprite
         this.frameX = 0;
         this.frameY = 0;
         this.gameFrame = 0;
         this.staggerFrame = 7;
 
-        this.width = this.spriteWidth;
-        this.height = this.spriteHeight;
     }
 
     draw(ctx){
@@ -34,17 +33,25 @@ export default class Player{
         //animation logic draw
         //frameX moves along one path
         //frameY chooses a different animiation from the sprite sheet
-        ctx.drawImage(this.spriteImage, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight,
-        this.spriteWidth, this.spriteHeight, this.xPos, this.yPos, this.spriteWidth, this.spriteHeight); //9 argument draw
+        //constants are to adjust on the sprite sheet
+        ctx.drawImage(this.spriteImage, 10 + this.frameX * this.spriteWidth, this.frameY * this.spriteHeight,
+        this.width, this.height, this.xPos, this.yPos + 3, this.width, this.height); //9 argument draw
         if(this.gameFrame % this.staggerFrame === 0){ //makes it change less rapidly
             if(this.frameX < 8) this.frameX++;
             else this.frameX = 0;
         }
         this.gameFrame++;
 
-        //do the shoot function and wraparound function
+        //do the shoot function, wraparound function, and shield functions
         this.shoot();
         this.wrapAround();
+    }
+
+    //draws a shield around the character if they collected a shield
+    drawShield(ctx){
+        ctx.beginPath();
+        ctx.arc(this.xPos + this.width / 2, this.yPos + this.height / 2 + 3, 30, 0, 2 * Math.PI);
+        ctx.stroke();
     }
 
     move(){
@@ -96,6 +103,7 @@ export default class Player{
         }
     }
 
+    //note that the +3 in yPos is to account for the positioning of the sprite sheet.
     collideWithBubble(bubble){
         bubble.height = bubble.radius * 2; //defined so that a bubble with a radius can also work in the collision detection
         bubble.width = bubble.radius * 2;
@@ -103,21 +111,21 @@ export default class Player{
         //xPos of bubble on a circle is the MIDDLE. So you need to subtract the radius
         if(this.xPos < bubble.xPos + bubble.width - bubble.radius &&
            this.xPos + this.width > bubble.xPos - bubble.radius &&
-           this.yPos < bubble.yPos + bubble.height - bubble.radius &&
-           this.yPos + this.height > bubble.yPos
+           this.yPos + 3 < bubble.yPos + bubble.height - bubble.radius &&
+           this.yPos + 3 + this.height > bubble.yPos
         ){
             //collision detected
-            // bubble.takeDamage(this.damage);
             return true;
         }
         return false;
     }
 
+    //note that the +3 in yPos is to account for the positioning of the sprite sheet
     collideWithBonus(bonus){
         if(this.xPos < bonus.xPos + bonus.width &&
             this.xPos + this.width > bonus.xPos &&
-            this.yPos < bonus.yPos + bonus.height &&
-            this.yPos + this.height > bonus.yPos
+            this.yPos + 3 < bonus.yPos + bonus.height &&
+            this.yPos + 3 + this.height > bonus.yPos
          ){
              return true;
          }

@@ -36,7 +36,7 @@ export default class Game{
 
     startGame(){
         //starts at level 1
-        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
+        this.level = new Level4(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
 
         //calls the game loop
@@ -49,7 +49,8 @@ export default class Game{
         this.timer.startTime = this.gameLength;
         this.timer.countdownEl.style.color = "black";
         this.player.lives = 3;
-        document.getElementById("lives").innerHTML = "Lives: 3"
+        document.getElementById("lives").innerHTML = "Lives: 3";
+        this.player.immunity = 0;
     }
 
     //stopping the loop with the pause button
@@ -89,6 +90,12 @@ export default class Game{
         this.bubbleAndTopCollision();
         this.bonusAndPlayerCollision();
 
+        //decrement immunity and draw shield if appropriate
+        this.player.immunity--;
+        if(this.player.lives > 0 && this.player.immunity > 10) {
+            this.player.drawShield(this.ctx);
+        }
+
         //drop bonuses when appropriate
         this.dropBonus();
 
@@ -121,9 +128,12 @@ export default class Game{
                     this.bubbles.push (new Bubble(bubble.xPos, bubble.yPos, -1, -2, newBubbleSize));
                 }
 
-                //bonus logic. Push the bonus into bonuses array if the bubble is big
-                if(bubble.size > 2){
-                    this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos));
+                //bonus logic. Drop coin from medium bubbles; drop shield from big bubbles
+                if(bubble.size > 2 && bubble.size < 5){
+                    this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos, "coin"));
+                }
+                else if(bubble.size === 5){
+                    this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos, "shield"));
                 }
             }
             else {
@@ -135,7 +145,6 @@ export default class Game{
     //bubble collision with player
     bubbleAndPlayerCollision(){
         this.bubbles.forEach((bubble) => {
-            this.player.immunity--;
             if(this.player.collideWithBubble(bubble) && this.player.immunity <= 0){
                 this.player.immunity = this.gameSpeed * 1.5; //gives you 1.5 seconds of immunity!
                 this.player.lives--;
@@ -163,9 +172,15 @@ export default class Game{
     bonusAndPlayerCollision(){
         this.bonuses.forEach((bonus) => {
             if(this.player.collideWithBonus(bonus)){
-                this.score += 100;
                 const bonusIndex = this.bonuses.indexOf(bonus);
                 this.bonuses.splice(bonusIndex, 1);
+                if(bonus.typeOfBonus === "coin"){
+                    this.score += 100;
+                }
+                else if(bonus.typeOfBonus === "shield"){
+                    //give 5 seconds of immunity
+                    this.player.immunity = this.gameSpeed * 5;
+                }
             }
         })
     }

@@ -1,5 +1,3 @@
-import Sound from "./sounds.js";
-
 export default class Player{
     constructor(xPos, yPos, bulletController, sound){
         this.xPos = xPos;
