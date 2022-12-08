@@ -24,6 +24,8 @@ canvasBackground.onload = ()=> {
 
 
 
+
+
 //setting displays to not show up yet
 document.getElementById("pauseButton").style.display = "none";
 document.getElementById("level").style.display = "none";

@@ -1,3 +1,7 @@
+//commented out code is for homescreen character import if using homescreen character walking around on homescreen
+
+// import homeScreenCharacter from "../playerHomeScreen.js";
+
 export default class Homescreen{
     constructor(canvas, ctx, canvasBackground){
         this.canvas = canvas;
@@ -5,10 +9,11 @@ export default class Homescreen{
         this.canvasBackground = canvasBackground;
         // this.canvasBackground.src = './imgs/blurredBackground.png'
         this.setInfo();
+        // this.newCharacter;
+        // this.character();
     }
 
     setInfo(){
-        // document.getElementById("game").style.filter = "blur(15px)";
         this.ctx.font = "40px Fantasy";
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
@@ -25,4 +30,13 @@ export default class Homescreen{
         this.ctx.fillText(`4. Collect coins and finish levels early to earn more points`, this.canvas.width / 2, this.canvas.height * 0.7);
         this.ctx.fillText(`5. Good luck and have fun!`, this.canvas.width / 2, this.canvas.height * 0.85);
     }
+
+    // character(){
+    //     this.newCharacter= new homeScreenCharacter(this.canvas.width / 2 - 25, this.canvas.height - 50, this.ctx, this.canvas, this.canvasBackground);
+    //     this.newCharacter.startLoop();
+    // }
+
+    // stopLoop(){
+    //     this.newCharacter.stopLoop();
+    // }
 }
