@@ -4,7 +4,7 @@ import Homescreen from "./levels/homeScreen.js";
 
 //defining canvas
 const canvas = document.getElementById("game");
-canvas.width = 900;
+canvas.width = 1000;
 canvas.height = 500;
 const canvasBackground = new Image();
 canvasBackground.src = './imgs/background.png'

@@ -36,7 +36,7 @@ export default class Game{
 
     startGame(){
         //starts at level 1
-        this.level = new Level4(this.player); //setting it to level 1 when you first start the game
+        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
 
         //calls the game loop
@@ -48,7 +48,7 @@ export default class Game{
         this.score = 0;
         this.timer.startTime = this.gameLength;
         this.timer.countdownEl.style.color = "white";
-        this.player.lives = 3;
+        this.player.lives = 1;
         document.getElementById("lives").innerHTML = "Lives: 3";
         this.player.immunity = 0;
     }
@@ -59,13 +59,13 @@ export default class Game{
         if (!this.paused){
             this.paused = true;
             clearInterval(this.timedLoop);
-            pauseButton.innerHTML = "resume";
+            pauseButton.innerHTML = "Resume";
             this.sound.pauseThemeSong();
         }
         else {
             this.paused = false;
             this.timedLoop = setInterval(this.gameLoop.bind(this), 1000 / this.gameSpeed);
-            pauseButton.innerHTML = "pause";
+            pauseButton.innerHTML = "Pause";
             this.sound.playThemeSong();
         }
     }

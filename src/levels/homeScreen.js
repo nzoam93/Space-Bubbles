@@ -7,7 +7,8 @@ export default class Homescreen{
     }
 
     setInfo(){
-        this.ctx.font = "45px Fantasy";
+        // document.getElementById("game").style.filter = "blur(15px)";
+        this.ctx.font = "40px Fantasy";
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
         this.ctx.shadowColor = "black";

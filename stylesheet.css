@@ -38,8 +38,8 @@ h1{
     margin-right: 150px;
     margin: 10px;
     margin-bottom: 0px;
-    font-size: 40px;
-    color:whitesmoke;
+    font-size: 45px;
+    color:yellow;
 }
 
 #bottomPart{
@@ -47,7 +47,7 @@ h1{
     align-items: center;
     justify-content: space-evenly;
     height: 75px;
-    width: 900px;
+    width: 1000px;
     background-image: url("./imgs/background.png");
     font-size: xx-large;
     color: white;
