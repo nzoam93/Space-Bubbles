@@ -79,6 +79,7 @@ export default class Player{
     }
 
     keydown = (e) => {
+        e.preventDefault();
         if(e.code === "ArrowLeft"){
             this.leftPressed = true;
         }
@@ -92,6 +93,7 @@ export default class Player{
     }
 
     keyup = (e) => {
+        e.preventDefault();
         if(e.code === "ArrowLeft"){
             this.leftPressed = false;
         }
@@ -136,10 +138,9 @@ export default class Player{
         if(this.shootPressed){
             const speed = 5;
             const delay = 7; //for delay between spikes
-            const damage = 1;
             const spikeX = this.xPos + this.width / 2;
             const spikeY = this.yPos;
-            this.spikeController.shoot(spikeX, spikeY, speed, damage, delay);
+            this.spikeController.shoot(spikeX, spikeY, speed, delay);
         }
     }
 }

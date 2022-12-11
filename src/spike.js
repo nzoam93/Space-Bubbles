@@ -1,9 +1,8 @@
 export default class Spike{
-    constructor(xPos, yPos, vel, damage){
+    constructor(xPos, yPos, vel){
         this.xPos = xPos;
         this.yPos = yPos;
         this.vel = vel;
-        this.damage = damage;
         this.width = 10;
 
         let canvas = document.getElementById("game");

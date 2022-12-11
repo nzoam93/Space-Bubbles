@@ -5,9 +5,9 @@ export default class SpikeController{
         this.spikes = [];
     }
 
-    shoot(xPos, yPos, vel, damage) {
+    shoot(xPos, yPos, vel) {
         if(this.spikes.length < 1){ //limits the number of spikes
-            this.spikes.push(new Spike(xPos, yPos, vel, damage));
+            this.spikes.push(new Spike(xPos, yPos, vel));
         }
     }
 

@@ -20,7 +20,7 @@ export default class Game{
         this.sound = new Sound();
         this.spikeController = new SpikeController();
         this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
-        this.gameLength = 20; //used for timer
+        this.gameLength = 120; //used for timer
         this.timer = new Timer(this.gameLength);
         this.level;
         this.levelNumber = 1;
