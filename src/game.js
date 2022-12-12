@@ -4,13 +4,17 @@ import SpikeController from "./spikeController.js";
 import Bubble from "./bubble.js";
 import Sound from "./sounds.js";
 import Timer from "./timer.js";
-import Level1 from "./levels/level1.js";
-import Level2 from "./levels/level2.js";
-import Level3 from "./levels/level3.js";
 import Bonus from "./bonus.js";
 import InBetweenLevel from "./levels/inBetweenLevel.js";
 import EndGame from "./levels/endGame.js";
+import Level1 from "./levels/level1.js";
+import Level2 from "./levels/level2.js";
+import Level3 from "./levels/level3.js";
 import Level4 from "./levels/level4.js";
+import Level5 from "./levels/level5.js";
+import Level6 from "./levels/level6.js";
+import Level7 from "./levels/level7.js";
+
 
 export default class Game{
     constructor(canvas, ctx, canvasBackground){
@@ -36,7 +40,7 @@ export default class Game{
 
     startGame(){
         //starts at level 1
-        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
+        this.level = new Level6(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
 
         //calls the game loop
@@ -212,26 +216,36 @@ export default class Game{
     isLevelComplete(){
         if(this.level.levelComplete()){
             //get points for finishing early
-            this.score += this.timer.seconds * 10;
+            this.score += (this.timer.seconds * 10 + this.timer.minutes * 60);
 
-            //pause and unpause the game for 4 seconds
+            //pause and unpause the game for 3 seconds
             this.pauseGame();
-            new InBetweenLevel(this.timer.seconds, this.ctx, this.canvasBackground, this.score);
-            setTimeout(this.pauseGame.bind(this), 4000); //bind so it doesn't lose context! Pauses the game for 4 secs
+            new InBetweenLevel(this.timer.minutes, this.timer.seconds, this.ctx, this.canvasBackground, this.score);
+            setTimeout(this.pauseGame.bind(this), 3000); //bind so it doesn't lose context! Pauses the game for 4 secs
 
             //go to the next level or to the end of the game if finished all levels
             if (this.levelNumber === 1){
                 this.level = new Level2(this.player);
             }
             else if(this.levelNumber === 2){
-                this.level = new Level3(this.player)
+                this.level = new Level3(this.player);
             }
             else if(this.levelNumber === 3){
-                this.level = new Level4(this.player)
+                this.level = new Level4(this.player);
             }
             else if(this.levelNumber === 4){
+                this.level = new Level5(this.player);
+            }
+            else if(this.levelNumber === 5){
+                this.level = new Level6(this.player);
+            }
+            else if(this.levelNumber === 6){
+                this.level = new Level7(this.player);
+            }
+            else if(this.levelNumber === 7){
                 new EndGame(this.score, this.ctx, this.canvasBackground);
             }
+
 
             this.levelNumber++; //use to increment it automatically
             this.timer.startTime = this.levelNumber * 20; //increase the timer count by 20 each level

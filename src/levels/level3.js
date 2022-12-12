@@ -1,11 +1,9 @@
 import Bubble from "../bubble.js";
+import LevelCore from "./levelCore.js";
 
-export default class Level3{
+export default class Level3 extends LevelCore{
     constructor(player){
-        this.numBubbles = 50; //I don't think I actually need this one
-        this.bubbles = [];
-        this.player = player;
-        this.canvas = document.getElementById("game");
+        super(player);
         this.setInfo();
         this.createBubble();
     }
@@ -18,9 +16,5 @@ export default class Level3{
     createBubble(){
         this.bubbles.push(new Bubble(700, this.canvas.height - 50,1,2,5));
         this.bubbles.push(new Bubble(50, this.canvas.height - 50,1,2,2));
-    }
-
-    levelComplete(){
-        return this.bubbles.length === 0;
     }
 }
