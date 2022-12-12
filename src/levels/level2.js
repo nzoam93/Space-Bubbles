@@ -10,7 +10,6 @@ import LevelCore from "./levelCore.js";
 
         setInfo(){
             document.getElementById("level").innerHTML = "Level: 2";
-            this.player.xPos = this.canvas.width / 2 - 25;
         }
 
         createBubble(){

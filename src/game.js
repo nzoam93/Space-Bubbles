@@ -30,12 +30,14 @@ export default class Game{
         this.levelNumber = 1;
         this.bubbles;
         this.bonuses = [];
+        this.numBubblesPopped = 0;
 
         this.score = 0;
         this.highScore = 0;
         this.gameSpeed = 60; //determines how many times a second the game runs
         this.paused = false;
         this.timedLoop; //used by game loop
+
     }
 
     startGame(){
@@ -55,6 +57,7 @@ export default class Game{
         this.player.lives = 3;
         document.getElementById("lives").innerHTML = "Lives: 3";
         this.player.immunity = 0;
+        this.spikeController.numSpikesAllowed = 1;
     }
 
     //stopping the loop with the pause button
@@ -119,6 +122,7 @@ export default class Game{
         this.bubbles.forEach((bubble) => {
             if(this.spikeController.collideWithBubble(bubble)){ //if there is a bubble collision with spike
                 this.sound.poppedBubble();
+                this.numBubblesPopped += 1;
                 this.score += 50;
 
                 //get rid of the current bubble
@@ -135,6 +139,9 @@ export default class Game{
                 //bonus logic. Drop coin from medium bubbles; drop shield from big bubbles
                 if(bubble.size > 2 && bubble.size < 5){
                     this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos, "coin"));
+                }
+                else if(this.numBubblesPopped % 75 === 0){ //every 75 bubbles, allow user to use one more spike!
+                    this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos, "twoSpike"));
                 }
                 else if(bubble.size === 5){
                     this.bonuses.push(new Bonus(this.ctx, bubble.xPos, bubble.yPos, "shield"));
@@ -184,6 +191,10 @@ export default class Game{
                 else if(bonus.typeOfBonus === "shield"){
                     //give 5 seconds of immunity
                     this.player.immunity = this.gameSpeed * 5;
+                }
+                else if(bonus.typeOfBonus === "twoSpike"){
+                    //allows user to use one more spike
+                    this.spikeController.numSpikesAllowed += 1;
                 }
             }
         })

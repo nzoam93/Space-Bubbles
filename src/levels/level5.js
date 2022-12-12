@@ -10,7 +10,6 @@ export default class Level5 extends LevelCore{
 
     setInfo(){
         document.getElementById("level").innerHTML = "Level: 5";
-        this.player.xPos = this.canvas.width / 2 - 25;
     }
 
     createBubble(){

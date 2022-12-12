@@ -3,12 +3,19 @@ import Spike from "./spike.js";
 export default class SpikeController{
     constructor(){
         this.spikes = [];
+        this.numSpikesAllowed = 1;
+        this.timeUntilNextSpike = 0;
     }
 
     shoot(xPos, yPos, vel) {
-        if(this.spikes.length < 1){ //limits the number of spikes
-            this.spikes.push(new Spike(xPos, yPos, vel));
+        if(this.timeUntilNextSpike <= 0){ //causes delay between spikes. (This prevents it from shooting two immediately when holding down space)
+            if(this.spikes.length < this.numSpikesAllowed){ //limits the number of spikes
+                this.spikes.push(new Spike(xPos, yPos, vel));
+                this.timeUntilNextSpike = 8;
+            }
         }
+        //decrease the value of the timer
+        this.timeUntilNextSpike--;
     }
 
     draw(ctx) {

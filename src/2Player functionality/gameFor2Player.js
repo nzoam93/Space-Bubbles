@@ -22,8 +22,8 @@ export default class Game{
         this.sound = new Sound();
         this.spikeController = new SpikeController();
         this.players = [];
-        this.player1 = new Player1(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
-        this.player2 = new Player2(canvas.width / 2 + 15, canvas.height - 50, this.spikeController, this.sound);
+        this.player1 = new Player1(canvas.width / 2 - 25, canvas.height - 50, this.spikeController, this.sound);
+        this.player2 = new Player2(canvas.width / 2 + 25, canvas.height - 50, this.spikeController, this.sound);
         this.players.push(this.player1, this.player2);
         console.log(this.players);
         this.gameLength = 20; //used for timer

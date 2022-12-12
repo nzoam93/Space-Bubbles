@@ -11,7 +11,6 @@ export default class Level7 extends LevelCore{
 
     setInfo(){
         document.getElementById("level").innerHTML = "Level: 7";
-        this.player.xPos = this.canvas.width / 2 - 25;
     }
 
     createBubble(){
@@ -23,7 +22,6 @@ export default class Level7 extends LevelCore{
     }
 
     createBubbleDynamically(){
-        let canvas = document.getElementById("game");
         setInterval(()=>{
             this.bubbles.push(new Bubble(500, this.canvas.height - 450,-1,2,5));
         }, 10000)
