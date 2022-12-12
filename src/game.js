@@ -40,7 +40,7 @@ export default class Game{
 
     startGame(){
         //starts at level 1
-        this.level = new Level6(this.player); //setting it to level 1 when you first start the game
+        this.level = new Level1(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
 
         //calls the game loop
