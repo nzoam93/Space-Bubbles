@@ -24,7 +24,7 @@ export default class Game{
         this.sound = new Sound();
         this.spikeController = new SpikeController();
         this.player = new Player(canvas.width / 2 - 15, canvas.height - 50, this.spikeController, this.sound);
-        this.gameLength = 120; //used for timer
+        this.gameLength = 20; //used for timer
         this.timer = new Timer(this.gameLength);
         this.level;
         this.levelNumber = 1;
@@ -41,6 +41,9 @@ export default class Game{
     }
 
     startGame(){
+        //sets the background to not be blurry
+        this.canvasBackground.src = './imgs/background.png'
+
         //starts at level 1
         this.level = new Level1(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
@@ -58,6 +61,7 @@ export default class Game{
         document.getElementById("lives").innerHTML = "Lives: 3";
         this.player.immunity = 0;
         this.spikeController.numSpikesAllowed = 1;
+        this.numBubblesPopped = 0;
     }
 
     //stopping the loop with the pause button
@@ -108,6 +112,9 @@ export default class Game{
 
         //update score and high score
         this.updateScore();
+
+        //update numBubbles popped
+        this.ctx.fillText(`Bubbles Popped: ${this.numBubblesPopped}`, this.canvas.width - 120, 40);
 
         //see if the level is over
         this.isLevelComplete();
@@ -215,11 +222,11 @@ export default class Game{
         this.ctx.font = "25px Fantasy";
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
-        this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 40);
+        this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 80);
         if(this.score > this.highScore){
             this.highScore = this.score;
         }
-        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width - 100, 80);
+        this.ctx.fillText(`High Score: ${this.highScore}`, this.canvas.width - 100, 120);
     }
 
 
