@@ -1,7 +1,7 @@
 # JS-Project-
 Creating game like Bubble Trouble
 
-[Live Link](https://nzoam93.github.io/Bubble-Trouble-Like-Game-V2/)
+[Live Link](https://nzoam93.github.io/Space-Bubbles/)
 
 
 Background:
