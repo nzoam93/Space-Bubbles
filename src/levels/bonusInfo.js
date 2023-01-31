@@ -29,10 +29,10 @@ export default class BonusInfo{
         this.ctx.font = "40px Fantasy";
         this.ctx.fillStyle = "orange";
         this.ctx.textAlign = "center";
-        this.ctx.shadowColor = "black";
-        this.ctx.shadowOffsetX = 10;
-        this.ctx.shadowOffsetY = 10;
-        this.ctx.shadowBlur = 10;
+        // this.ctx.shadowColor = "black";
+        // this.ctx.shadowOffsetX = 10;
+        // this.ctx.shadowOffsetY = 10;
+        // this.ctx.shadowBlur = 10;
         this.ctx.fillText(`Bonus Info:`, this.canvas.width / 2, this.canvas.height * 0.1);
 
         this.ctx.font = "30px Fantasy";

@@ -20,7 +20,7 @@ export default class InBetweenLevel{
 
         //write text
         // this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 40);
-        this.ctx.font = "38px Fantasy";
+        this.ctx.font = "32px Fantasy";
         this.ctx.fillText("Level Complete!", this.canvas.width/2, this.canvas.height * 0.3);
         this.ctx.fillText(`You got ${this.timerSecs * 10 + this.timerMin * 60} points for finishing ${this.timerSecs + this.timerMin * 60} secs early`, this.canvas.width/2, this.canvas.height * 0.5)
         this.ctx.fillText(`Next level in ${this.countDown}`, this.canvas.width/2, this.canvas.height * 0.7)
