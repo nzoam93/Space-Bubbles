@@ -1,6 +1,6 @@
 //imports
 import Game from "./game.js";
-import BonusInfo from "./levels/BonusInfo.js";
+import BonusInfo from "./levels/bonusInfo.js";
 import Homescreen from "./levels/homeScreen.js";
 
 //defining canvas
