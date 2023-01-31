@@ -66,6 +66,7 @@ const homeButton = document.getElementById("homeScreen");
 homeButton.addEventListener("click", () => {
     // new Homescreen(canvas, ctx, canvasBackground);
     homeScreen.setInfo();
+    document.getElementById("bonusInfo").style.display = "block";
 })
 
 //calling pauseGame upon click

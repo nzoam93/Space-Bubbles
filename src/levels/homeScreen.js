@@ -18,7 +18,6 @@ export default class Homescreen{
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.drawImage(this.canvasBackground,0,0);
 
-        // document.getElementById("bonusInfo").style.display = "block";
         document.getElementById("homeScreen").style.display = "none";
         this.ctx.font = "40px Fantasy";
         this.ctx.fillStyle = "white";

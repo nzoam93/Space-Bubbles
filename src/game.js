@@ -42,7 +42,11 @@ export default class Game{
 
     startGame(){
         //sets the background to not be blurry
-        this.canvasBackground.src = './imgs/background.png'
+        this.canvasBackground.src = './imgs/background.png';
+
+        //hides the bonusInfo button
+        document.getElementById("bonusInfo").style.display = "none";
+
 
         //starts at level 1
         this.level = new Level1(this.player); //setting it to level 1 when you first start the game
@@ -281,6 +285,7 @@ export default class Game{
             clearInterval(this.timedLoop);
             document.getElementById("pauseButton").style.display = "none";
             document.getElementById("playButton").style.display = "block";
+            document.getElementById("homeScreen").style.display = "block";
             document.getElementById("playButton").innerHTML = "Restart"
             this.sound.pauseThemeSong();
         }
