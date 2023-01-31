@@ -47,7 +47,6 @@ export default class Game{
         //hides the bonusInfo button
         document.getElementById("bonusInfo").style.display = "none";
 
-
         //starts at level 1
         this.level = new Level1(this.player); //setting it to level 1 when you first start the game
         this.bubbles = this.level.bubbles; //getting the array of bubbles defined in the level class
