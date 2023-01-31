@@ -37,7 +37,6 @@ export default class Game{
         this.gameSpeed = 60; //determines how many times a second the game runs
         this.paused = false;
         this.timedLoop; //used by game loop
-
     }
 
     startGame(){
